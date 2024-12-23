@@ -1,7 +1,7 @@
 from openai import OpenAI
 
 
-def make_model(base_url="https://api.nextapi.fun/v1", api_key="ak-T6GDT1FxkQ8tWKkuHemL5RHZcg7naiW4CQB4pWEqQKKHMM1H"):
+def make_model(base_url="https://api.nextapi.fun/v1", api_key=""):
     _client = OpenAI(
         base_url=base_url,
         api_key=api_key,
