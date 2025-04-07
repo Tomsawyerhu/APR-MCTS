@@ -2,11 +2,11 @@ from subprocess import PIPE, run
 
 import javalang
 
-tmp_dir = "/Users/tom/PycharmProjects/APRMcts/tmp"
-shell_script_folder = "/Users/tom/PycharmProjects/APRMcts/scripts"
+tmp_dir = "/mnt/data/hhc/APRMcts/tmp2"
+shell_script_folder = "/mnt/data/hhc/APRMcts/scripts"
 script_name = "defects4j"
-java_home = "/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home"
-d4j_path = "/Users/tom/defects4j"
+java_home = "/usr/lib/jvm/java-8-openjdk-amd64"
+d4j_path = "/mnt/data/hhc/defects4j"
 
 
 def run_bash(function, project, bug_id, extra_arg1=None, extra_arg2=None):
@@ -58,3 +58,19 @@ def make_failing_tests_short(failing_tests, test_names):
         if lines[i].startswith("---") and lines[i].split("::")[-1].strip() in test_names:
             result += "\n".join(lines[i:i + 20]) + "\n"
     return result
+
+def write_line_to_txt(file_path, line_content):
+    """
+    向指定的 txt 文件写入一行内容。
+    
+    参数：
+        file_path (str): 目标文件路径（如 "example.txt"）。
+        line_content (str): 要写入的内容（字符串格式）。
+    """
+    try:
+        # 使用追加模式 ('a') 打开文件，如果文件不存在会自动创建
+        with open(file_path, 'a', encoding='utf-8') as file:
+            file.write(line_content + '\n')  # 写入内容并换行
+        print(f"成功写入: {line_content}")
+    except Exception as e:
+        print(f"写入文件时出错: {e}")
