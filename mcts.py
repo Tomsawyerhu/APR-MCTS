@@ -15,17 +15,19 @@ from llm import generate as generate_llm, generate_patches as generate_patches_l
 from gpt import generate as generate_gpt, generate_patches as generate_patches_gpt
 from utils import run_bash, get_test_names, extract_method, make_failing_tests_short
 import sys
+from utils import *
 
-accepted_policy_models = ["gpt-4o-mini", "gpt-4o", "qwen-3b", "yi-9b","llama-3b","llama-8b"]
+accepted_policy_models = ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo", "qwen-3b","qwen-7b", "yi-9b","llama-3b"]
 model_paths = {
     "qwen-3b": "/root/autodl-tmp/Qwen2.5-Coder-3B-Instruct",
+    "qwen-7b": "/mnt/data/hhc/Qwen2.5-Coder-7B-Instruct",
     "yi-9b": "/root/autodl-tmp/Yi-Coder-9B-Chat",
-    "llama-3b": "/root/autodl-tmp/Llama-3.2-3B-Instruct",
-    "llama-8b": "/root/autodl-tmp/Llama-3.1-8B-Instruct",
+    "llama-3b": "/root/autodl-tmp/Llama-3.2-3B-Instruct"
 }
+token_statistics_file="./token_statistics.txt"
 
 max_expansion = 3  # 最大扩展节点数量
-max_rollout = 20  # 最大rollout次数
+max_rollout = 16  # 最大rollout次数
 exploration_constant = 0.7  # 探索常数
 mcts_inf = 1
 policy_model = None
@@ -342,17 +344,19 @@ def mcts_repair():
                 result_list.append((json_line["project"], str(json_line["bug_id"])))
 
     already_fixed = []
-    with open("./data/mcts_gpt_4o_mini_16_rollout.jsonl", 'r') as f:
-        for line in f.readlines():
-            json_line = json.loads(line)
-            if json_line["eval"] == "PASS":
-                already_fixed.append((json_line["project"], str(json_line["bug_id"])))
+    # with open("./data/mcts_gpt_4o_mini_16_rollout.jsonl", 'r') as f:
+    #     for line in f.readlines():
+    #         json_line = json.loads(line)
+    #         if json_line["eval"] == "PASS":
+    #             already_fixed.append((json_line["project"], str(json_line["bug_id"])))
 
     projects = get_defects4j_projects()
     for proj in projects:
         bugs = get_defects4j_bugs_by_project(proj)
 
         for bug in tqdm.tqdm(bugs):
+            # 记录一下patch名称
+            write_line_to_txt(token_statistics_file,f"===================={proj}_{bug}====================")
             if (proj, str(bug)) in result_list:
                 continue
             if (proj, str(bug)) in already_fixed:
