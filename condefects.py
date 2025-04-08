@@ -1,3 +1,4 @@
+import signal
 import subprocess
 import json
 import os
@@ -16,28 +17,55 @@ class TimeoutException(Exception):
     def __init__(self, *args):
         super().__init__(*args)
 
-
+def terminate_process(process):
+    """
+    Terminate a subprocess and its child processes to ensure cleanup.
+    """
+    try:
+        # Send SIGTERM to the process group (Unix/Linux only)
+        os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+    except ProcessLookupError:
+        pass  # Process already terminated
+    finally:
+        # Ensure the process is cleaned up
+        process.terminate()
+        process.wait()
 def run_command(command, cwd="", timeout=10):
     """
     Helper function to run a shell command and return its output.
+    Ensures cleanup of child processes in case of timeout.
     """
     try:
-        result = subprocess.run(
+        # Start the subprocess in a new process group
+        process = subprocess.Popen(
             command,
             shell=True,
-            check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             cwd=cwd,
-            timeout=timeout
+            preexec_fn=os.setsid  # Create a new process group for the subprocess
         )
-        return result.stdout.strip()
+
+        # Wait for the process to complete with a timeout
+        stdout, stderr = process.communicate(timeout=timeout)
+
+        # Check if the process exited successfully
+        if process.returncode != 0:
+            print(f"Error running command: {command}")
+            print(f"Error message: {stderr.strip()}")
+            return None
+
+        return stdout.strip()
+
     except subprocess.TimeoutExpired:
+        # Terminate the process group to ensure cleanup
+        terminate_process(process)
         raise TimeoutException(f"Command timed out after {timeout} seconds: {command}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error running command: {command}")
-        print(f"Error message: {e.stderr}")
+
+    except Exception as e:
+        print(f"Unexpected error running command: {command}")
+        print(f"Error message: {str(e)}")
         return None
 
 
@@ -218,8 +246,9 @@ def run_python_test(task_id="", test_list=[]):
         raise Exception("test num must >=1")
     test_str = ' '.join(test_list)
     command = f"python3 ConDefects.py run -w {condefects_dir}  -s {task_id}  -t {test_str}"
+    print(f"execute {command}")
     try:
-        output = run_command(command, cwd=condefects_dir, timeout=3)
+        output = run_command(command, cwd=condefects_dir, timeout=10)
     except TimeoutException:
         return "timeout"
     test_result = parse_test_result(output)
@@ -285,5 +314,5 @@ def apply_patch(task_id="", program_id="", patch=""):
 
 
 if __name__ == '__main__':
-    print(run_python_test("abc229_d", ['000.txt', '001.txt']))
-    # record_python_task_meta(output_file="./condefects_meta.jsonl")
+    # print(run_python_test("abc229_d", ['000.txt', '001.txt']))
+    record_python_task_meta(output_file="./condefects_meta.jsonl")
