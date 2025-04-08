@@ -5,11 +5,11 @@ import math
 import os
 import random
 import tqdm
-import transformers
+# import transformers
 from framework import Bug
 import prompt_mcts as prompt
 from condefects import *
-from llm import generate as generate_llm, generate_patches as generate_patches_llm
+# from llm import generate as generate_llm, generate_patches as generate_patches_llm
 from gpt import generate as generate_gpt, generate_patches as generate_patches_gpt
 import sys
 
@@ -125,7 +125,8 @@ def expand(node: Node):
     if isinstance(policy_model, str):
         responses = generate_patches_gpt(prompt=repair_prompt, num_samples=branch)
     else:
-        responses = generate_patches_llm(policy_model, repair_prompt, num_samples=branch)
+        # responses = generate_patches_llm(policy_model, repair_prompt, num_samples=branch)
+        pass
     existed = []
     for response in responses:
         if node.is_fully_expanded():
@@ -292,10 +293,17 @@ def format_test_failure_info(test_input, test_output, expected_output, is_passed
 
 
 def mcts_repair():
+    existed_ids=[]
+    if os.path.exists(output_file):
+        with jsonlines.open(output_file,'r') as f:
+            for line in f:
+                existed_ids.append((line["project"],line['bug_id']))
     # read condefects meta
     with jsonlines.open(condefects_meta, 'r') as reader:
         for line in reader:
             buggy_code, correct_code, bug_location = read_python_program_code(line['task_id'], line['program_id'])
+            if (line['task_id'], line['program_id']) in existed_ids:
+                continue
             if len(bug_location) > 1:
                 #只修复单行缺陷,但是修复模式使用SF
                 continue
@@ -328,6 +336,7 @@ def mcts_repair():
                 continue
             bug.test_output = test_result[line['program_id']]['test_results']
             bug.expected_output = test_result[line['program_id']]['correct_results']
+            print(test_result)
             is_passed_result = line['test_result']
             bug.failing_tests = format_test_failure_info(bug.test_input, bug.test_output, bug.expected_output,
                                                          is_passed_result)
@@ -402,7 +411,7 @@ def parse_and_check_args():
         from llm import make_model
         policy_model = make_model(_policy_model_path)
         print(f"Using local model {_policy_model}, model path {_policy_model_path}")
-        tokenizer = transformers.AutoTokenizer.from_pretrained(_policy_model_path, use_fast=False, )
+        # tokenizer = transformers.AutoTokenizer.from_pretrained(_policy_model_path, use_fast=False, )
 
     reward_model = policy_model
     max_rollout = _max_rollout
