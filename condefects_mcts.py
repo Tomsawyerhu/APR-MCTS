@@ -141,8 +141,7 @@ def expand(node: Node):
         print(response + "\n")
 
         # apply patch
-        apply_patch(task_id=node.bug.project, program_id=node.bug.bug_id, masked_code=node.bug.masked_code,
-                    mask_placeholder=">>> [ INFILL ] <<<", patch_line=patch)
+        apply_patch(task_id=node.bug.project, program_id=node.bug.bug_id, patch = patch)
         print(f"Apply patch {patch}")
 
         # validate patch
@@ -162,7 +161,7 @@ def expand(node: Node):
                                                                 is_passed_result)
 
         # 对于SL和SH类型bug, 下一个状态的bug的buggy_lines就是当前patch, 对于SF类型bug，直接更新下一个状态的bug的code为patch
-        next_bug_state.buggy_lines = patch
+        next_bug_state.code = patch
         child = Node(next_bug_state)
 
         # reward是测试通过率
@@ -252,21 +251,6 @@ def mcts_search(root: Node):
                                   "rollout": max_rollout}) + "\n")
 
 
-def check_bug_detail(bug_detail: Bug):
-    if bug_detail.code is None or bug_detail.code == "":
-        return False
-    if not bug_detail.bug_type.startswith("SL") and not bug_detail.bug_type.startswith(
-            "SH") and not bug_detail.bug_type.startswith(
-        "SF"):
-        return False
-    if bug_detail.bug_type.startswith("SL") or bug_detail.bug_type.startswith("SH"):
-        if not bug_detail.masked_code:
-            return False
-        if ">>> [ INFILL ] <<<" not in bug_detail.masked_code:
-            return False
-    return True
-
-
 def read_line(bug_code: str, line_num):
     all_lines = bug_code.split("\n")
     return all_lines[line_num - 1]
@@ -301,13 +285,13 @@ def mcts_repair():
         for line in reader:
             buggy_code, correct_code, bug_location = read_python_program_code(line['task_id'], line['program_id'])
             if len(bug_location) > 1:
-                #只修复单行缺陷
+                #只修复单行缺陷,但是修复模式使用SF
                 continue
             if line["time"]>3:
                 # 测试时间>3s的先不修复
                 continue
             checkout_python_task(line['task_id'])
-            bug_type = "SL"
+            bug_type = "SF"
             bug = Bug(test_framework="condefects",
                       project=line['task_id'],
                       bug_id=line['program_id'],
