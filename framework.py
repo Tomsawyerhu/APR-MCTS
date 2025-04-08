@@ -8,8 +8,8 @@ import logging
 from utils import run_bash, get_test_names, extract_method, make_failing_tests_short, tmp_dir
 
 bug_details_cache_folder = "./bug_cache"
-# validate_patch_cache_folder = "./validate_patch_cache"
-validate_patch_cache_folder = None
+validate_patch_cache_folder = "./validate_patch_cache"
+# validate_patch_cache_folder = None
 
 
 class Bug(object):
@@ -29,7 +29,10 @@ class Bug(object):
                  test_suite,
                  test_name,
                  test_line,
-                 test_error_message):
+                 test_error_message,
+                 test_input=None,
+                 test_output=None,
+                 expected_output=None):
         self.test_framework = test_framework
         self.project = project
         self.bug_id = bug_id
@@ -46,6 +49,10 @@ class Bug(object):
         self.test_name = test_name
         self.test_line = test_line
         self.test_error_message = test_error_message
+        # condefects 新加的字段
+        self.test_input=test_input
+        self.test_output=test_output
+        self.expected_output=expected_output
 
 
 def get_test(project, bug_id, test_suit):
@@ -211,7 +218,7 @@ def remove_comments_and_blank(code):
 if __name__ == '__main__':
 
 
-    # manual_txt="./data/manual_result_llama_3b.txt"
+    # manual_txt="./data/manual_result_yi_9b.txt"
     #
     # already_have=[]
     # if os.path.exists(manual_txt):
@@ -219,7 +226,7 @@ if __name__ == '__main__':
     #         for line in t:
     #             already_have.append(line.strip().split(',')[0])
     #
-    # with open("./data/result_llama_3.2_3b.jsonl", 'r') as f:
+    # with open("./data/result_yi.jsonl", 'r') as f:
     #     for line in f:
     #         json_line = json.loads(line)
     #         if json_line['eval'] == 'PASS':
@@ -236,7 +243,7 @@ if __name__ == '__main__':
     #                     t.write(json_line["project"]+"_"+str(json_line["bug_id"])+",\n")
 
     proj = "Time"
-    bid = 20
+    bid = 17
     bug = get_bug_details(proj, bid)
 
     print(bug.fixed_code)
@@ -245,7 +252,7 @@ if __name__ == '__main__':
         f.write(bug.code)
     with open("./data/fixed_code.java", "w") as f:
         f.write(bug.fixed_code)
-    with open("./data/result_llama_3.2_3b.jsonl", 'r') as f:
+    with open("./data/result_yi.jsonl", 'r') as f:
         for line in f:
             json_line = json.loads(line)
             if json_line['eval'] == 'PASS' and json_line['project'] == proj and str(json_line['bug_id']) == str(bid):
