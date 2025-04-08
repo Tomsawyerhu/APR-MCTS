@@ -12,7 +12,12 @@ condefects_test_dir = condefects_dir + "/Test"
 condefects_coverage_dir = condefects_dir + "/Coverage"
 
 
-def run_command(command, cwd=""):
+class TimeoutException(Exception):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+
+def run_command(command, cwd="", timeout=10):
     """
     Helper function to run a shell command and return its output.
     """
@@ -24,9 +29,12 @@ def run_command(command, cwd=""):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
-            cwd=cwd
+            cwd=cwd,
+            timeout=timeout
         )
         return result.stdout.strip()
+    except subprocess.TimeoutExpired:
+        raise TimeoutException(f"Command timed out after {timeout} seconds: {command}")
     except subprocess.CalledProcessError as e:
         print(f"Error running command: {command}")
         print(f"Error message: {e.stderr}")
@@ -210,7 +218,10 @@ def run_python_test(task_id="", test_list=[]):
         raise Exception("test num must >=1")
     test_str = ' '.join(test_list)
     command = f"python3 ConDefects.py run -w {condefects_dir}  -s {task_id}  -t {test_str}"
-    output = run_command(command, cwd=condefects_dir)
+    try:
+        output = run_command(command, cwd=condefects_dir, timeout=3)
+    except TimeoutException:
+        return "timeout"
     test_result = parse_test_result(output)
     for k in test_result.keys():
         test_result[k]["test_list"] = test_list
