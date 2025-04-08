@@ -141,31 +141,43 @@ def expand(node: Node):
         print(response + "\n")
 
         # apply patch
-        apply_patch(task_id=node.bug.project, program_id=node.bug.bug_id, patch = patch)
-        print(f"Apply patch {patch}")
+        apply_patch(task_id=node.bug.project, program_id=node.bug.bug_id, patch=patch)
+        print(f"=================== Apply patch =================== \n{patch}")
 
         # validate patch
         task_test_result = run_python_test(node.bug.project, test_list=node.bug.test_suite)
-        program_test_result = task_test_result[node.bug.bug_id]
-        if False not in program_test_result["is_test_passed"]:
-            node.can_fix = True
-            node.patches.append(patch)
-            if not search_until_maxrollout:
-                return node
+
+        # new bug
+        next_bug_state = copy.deepcopy(bug)
 
         # update fail msg
-        next_bug_state = copy.deepcopy(bug)
-        next_bug_state.test_output = task_test_result[bug.bug_id]['test_results']
-        is_passed_result = task_test_result[bug.bug_id]['is_test_passed']
-        next_bug_state.failing_tests = format_test_failure_info(bug.test_input, bug.test_output, bug.expected_output,
-                                                                is_passed_result)
+        if task_test_result == "timeout":
+            next_bug_state.test_output = "timeout"
+            next_bug_state.failing_tests = "timeout happens"
+            program_test_result = None
+        else:
+            program_test_result = task_test_result[node.bug.bug_id]
+            if False not in program_test_result["is_test_passed"]:
+                node.can_fix = True
+                node.patches.append(patch)
+                if not search_until_maxrollout:
+                    return node
+            next_bug_state.test_output = task_test_result[bug.bug_id]['test_results']
+            is_passed_result = task_test_result[bug.bug_id]['is_test_passed']
+            next_bug_state.failing_tests = format_test_failure_info(next_bug_state.test_input,
+                                                                    next_bug_state.test_output,
+                                                                    next_bug_state.expected_output,
+                                                                    is_passed_result)
 
         # 对于SL和SH类型bug, 下一个状态的bug的buggy_lines就是当前patch, 对于SF类型bug，直接更新下一个状态的bug的code为patch
         next_bug_state.code = patch
         child = Node(next_bug_state)
 
         # reward是测试通过率
-        reward = program_test_result["is_test_passed"].count("True") / len(program_test_result["is_test_passed"])
+        if task_test_result == "timeout":
+            reward = 0
+        else:
+            reward = program_test_result["is_test_passed"].count("True") / len(program_test_result["is_test_passed"])
         child.V = reward
         print('-' * 40)
         print(f"Reward for this patch is:\n{child.V}\n")
@@ -287,7 +299,7 @@ def mcts_repair():
             if len(bug_location) > 1:
                 #只修复单行缺陷,但是修复模式使用SF
                 continue
-            if line["time"]>3:
+            if line["time"] > 3:
                 # 测试时间>3s的先不修复
                 continue
             checkout_python_task(line['task_id'])
@@ -312,6 +324,8 @@ def mcts_repair():
             # condefects 新加的字段
             bug.test_input = [get_python_test_input(line['task_id'], x) for x in line["test_list"]]
             test_result = run_python_test(line['task_id'], test_list=line["test_list"])
+            if test_result == "timeout":
+                continue
             bug.test_output = test_result[line['program_id']]['test_results']
             bug.expected_output = test_result[line['program_id']]['correct_results']
             is_passed_result = line['test_result']
