@@ -265,8 +265,7 @@ def get_python_test_input(task_id="", test_name=""):
     return str(open(path, 'r').read())
 
 
-def apply_patch(task_id="", program_id="", masked_code="", mask_placeholder="", patch_line=""):
-    patch = masked_code.replace(mask_placeholder, patch_line)
+def apply_patch(task_id="", program_id="", patch=""):
     program_path = os.path.sep.join([condefects_dir, task_id, "Python", program_id])
     faulty_version_path = os.path.sep.join([program_path, "faultyVersion.py"])
     with open(faulty_version_path, 'w') as f:
