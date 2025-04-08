@@ -2,6 +2,7 @@ import subprocess
 import json
 import os
 import time
+import tqdm
 
 import jsonlines
 
@@ -73,6 +74,9 @@ def get_all_java_tasks():
 
 
 def checkout_python_task(task_id=""):
+    if check_if_checkout_python(task_id):
+        rm_command = f"rm -rf {os.path.sep.join([condefects_dir, str(task_id)])}"
+        run_command(rm_command, cwd=condefects_dir)
     checkout_command = f"python3 ConDefects.py checkout -w {condefects_dir} -l python -s {task_id}"
     run_command(checkout_command, cwd=condefects_dir)
 
@@ -156,30 +160,43 @@ def parse_python_task_coverage(task_id=""):
     return coverage_result
 
 
-def parse_test_result(output: str):
+def parse_test_result(outputs: str):
+    program_marker = "--------------------------------------------------"
     test_result_marker = "=====================test result====================="
     correct_result_marker = "=====================correct result====================="
-    test_results, correct_results, is_test_passed = [], [], []
-    test_result_pointer, correct_result_pointer = 0, 0
-    i = output.find(test_result_marker, test_result_pointer)
-    while i >= 0:
-        j = output.find(test_result_marker, i + len(test_result_marker))
-        test_results.append(output[i + len(test_result_marker):j])
-        i = output.find(test_result_marker, j + len(test_result_marker))
+    results = {}
+    for output in outputs.split(program_marker):
+        if output.strip() == "":
+            continue
+        program_id = ""
+        test_results, correct_results, is_test_passed = [], [], []
+        test_result_pointer, correct_result_pointer = 0, 0
+        i = output.find(test_result_marker, test_result_pointer)
+        while i >= 0:
+            j = output.find(test_result_marker, i + len(test_result_marker))
+            test_results.append(output[i + len(test_result_marker):j].strip())
+            i = output.find(test_result_marker, j + len(test_result_marker))
 
-    p = output.find(correct_result_marker, correct_result_pointer)
-    while p >= 0:
-        q = output.find(correct_result_marker, p + len(correct_result_marker))
-        correct_results.append(output[p + len(correct_result_marker):q])
-        p = output.find(correct_result_marker, q + len(correct_result_marker))
-    for line in output.split("\n"):
-        if "test:" in line and "result:" in line:
-            if "False" in line:
-                is_test_passed.append(False)
-            if "True" in line:
-                is_test_passed.append(True)
+        p = output.find(correct_result_marker, correct_result_pointer)
+        while p >= 0:
+            q = output.find(correct_result_marker, p + len(correct_result_marker))
+            correct_results.append(output[p + len(correct_result_marker):q].strip())
+            p = output.find(correct_result_marker, q + len(correct_result_marker))
+        for line in output.split("\n"):
+            if "task" in line and "code:" in line:
+                program_id = line.split("code:")[-1].strip()
+            if "test:" in line and "result:" in line:
+                if "False" in line:
+                    is_test_passed.append(False)
+                if "True" in line:
+                    is_test_passed.append(True)
+        results[program_id] = {
+            "correct_results": correct_results,
+            "test_results": test_results,
+            "is_test_passed": is_test_passed
+        }
 
-    return correct_results, test_results, is_test_passed
+    return results
 
 
 def run_python_test(task_id="", test_list=[]):
@@ -194,8 +211,10 @@ def run_python_test(task_id="", test_list=[]):
     test_str = ' '.join(test_list)
     command = f"python3 ConDefects.py run -w {condefects_dir}  -s {task_id}  -t {test_str}"
     output = run_command(command, cwd=condefects_dir)
-    correct_results, test_results, is_test_passed = parse_test_result(output)
-    return zip(test_list, correct_results, test_results, is_test_passed)
+    test_result = parse_test_result(output)
+    for k in test_result.keys():
+        test_result[k]["test_list"] = test_list
+    return test_result
 
 
 def record_python_task_meta(output_file=""):
@@ -205,7 +224,7 @@ def record_python_task_meta(output_file=""):
             for line in reader:
                 existed_ids.append((line['task_id'], line['program_id']))
     python_tasks = get_all_python_tasks()
-    for python_task in python_tasks:
+    for python_task in tqdm.tqdm(python_tasks):
         start_time = time.time()
         try:
             coverage_result = parse_python_task_coverage(python_task)
@@ -226,6 +245,35 @@ def record_python_task_meta(output_file=""):
                 writter.write(meta_info)
 
 
+def read_python_program_code(task_id="", program_id=""):
+    program_path = os.path.sep.join([condefects_code_dir, task_id, "Python", program_id])
+    correct_version_path = os.path.sep.join([program_path, "correctVersion.py"])
+    fault_location_path = os.path.sep.join([program_path, "faultLocation.txt"])
+    faulty_version_path = os.path.sep.join([program_path, "faultyVersion.py"])
+    if not os.path.exists(correct_version_path) or not os.path.exists(fault_location_path) or not os.path.exists(
+            faulty_version_path):
+        raise Exception(f"task {task_id} program {program_id} not complete")
+    correct_code = str(open(correct_version_path, 'r').read())
+    buggy_code = str(open(faulty_version_path, 'r').read())
+    bug_location = [int(x) for x in open(fault_location_path, 'r').readlines() if len(x.strip()) > 0]
+    return buggy_code, correct_code, bug_location
+
+
+def get_python_test_input(task_id="", test_name=""):
+    dir1, dir2 = task_id.split("_")[0], task_id.split("_")[1].capitalize()
+    path = os.path.sep.join([condefects_test_dir, dir1, dir2, "in", test_name])
+    return str(open(path, 'r').read())
+
+
+def apply_patch(task_id="", program_id="", masked_code="", mask_placeholder="", patch_line=""):
+    patch = masked_code.replace(mask_placeholder, patch_line)
+    program_path = os.path.sep.join([condefects_dir, task_id, "Python", program_id])
+    faulty_version_path = os.path.sep.join([program_path, "faultyVersion.py"])
+    with open(faulty_version_path, 'w') as f:
+        f.write(patch)
+    f.close()
+
+
 if __name__ == '__main__':
-    # print(run_python_test("abc340_g", ['02_random_02.txt', '04_path_03.txt']))
-    record_python_task_meta(output_file="./condefects_meta.jsonl")
+    print(run_python_test("abc229_d", ['000.txt', '001.txt']))
+    # record_python_task_meta(output_file="./condefects_meta.jsonl")
