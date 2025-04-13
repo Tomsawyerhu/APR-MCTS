@@ -209,8 +209,8 @@ def parse_python_task_coverage(task_id=""):
     return coverage_result
 
 
-def parse_test_result(output_file:str):
-    with open(output_file,'r') as f:
+def parse_test_result(output_file: str):
+    with open(output_file, 'r') as f:
         result_dict = json.load(f)
         # "is_passed": is_passed,
         # "test_output": test_output,
@@ -238,7 +238,7 @@ def run_python_test(task_id="", program_id="", test_list=[]):
         raise Exception("test num must >=1")
     test_str = ' '.join(test_list)
     # 输出文件
-    output_file=f"{condefects_tmp_dir}/{task_id}-{program_id}-{uuid.uuid4()}.json"
+    output_file = f"{condefects_tmp_dir}/{task_id}-{program_id}-{uuid.uuid4()}.json"
     command = f"python3 ConDefects.py runsingle -w {condefects_dir}  -s {task_id}  -t {test_str} --program-id {program_id} --result-path {output_file}"
     print(f"execute {command}")
     try:
@@ -246,12 +246,12 @@ def run_python_test(task_id="", program_id="", test_list=[]):
     except TimeoutException:
         return "timeout"
     test_result = parse_test_result(output_file)
-    new_result={}
-    new_result[program_id]={
+    new_result = {}
+    new_result[program_id] = {
         "correct_results": [test_result[test_name]["correct_result"] for test_name in test_list],
-        "test_results":[test_result[test_name]["test_result"] for test_name in test_list],
+        "test_results": [test_result[test_name]["test_result"] for test_name in test_list],
         "is_test_passed": [test_result[test_name]["is_test_passed"] for test_name in test_list],
-        "test_list":test_list
+        "test_list": test_list
     }
 
     return new_result
@@ -280,20 +280,24 @@ def record_python_task_meta(output_file=""):
     for python_task in tqdm.tqdm(python_tasks):
         if python_task in existed_task_ids:
             continue
-        start_time = time.time()
-        try:
-            coverage_result = parse_python_task_coverage(python_task)
-        except:
-            continue
-        end_time = time.time()
-        for program in coverage_result.keys():
-            if (python_task, program) in existed_ids:
+        program_ids = get_python_programs(python_task)
+        testlist = get_all_python_tests(python_task)
+
+        for program_id in program_ids:
+            start_time = time.time()
+            try:
+                result = run_python_test(task_id=python_task,program_id=program_id,test_list=testlist)
+            except:
+                continue
+            end_time = time.time()
+
+            if (python_task, program_id) in existed_ids:
                 continue
             meta_info = {
                 "task_id": python_task,
-                "program_id": program,
-                "test_list": coverage_result[program]['test_list'],
-                "test_result": coverage_result[program]['test_result'],
+                "program_id": program_id,
+                "test_list": testlist,
+                "test_result": result[program_id]['is_test_passed'],
                 "difficulty": difficulty[python_task],
                 "time": end_time - start_time
             }
@@ -356,7 +360,7 @@ def get_all_python_tests(task_id=""):
         return []
     else:
         for test_file in os.listdir(in_path):
-            if os.path.exists(os.path.sep.join([out_path,test_file])):
+            if os.path.exists(os.path.sep.join([out_path, test_file])):
                 test_list.append(test_file)
     return test_list
 
@@ -451,21 +455,19 @@ def collect_import():
 
 if __name__ == '__main__':
     # print(run_python_test("abc229_d", ['000.txt', '001.txt']))
-    # record_python_task_meta(output_file="./condefects_meta.jsonl")
+    record_python_task_meta(output_file="./condefects_meta.jsonl")
     # incorporate_date_meta("./data/condefects_meta.jsonl", "./data/date.txt", "./data/condefects_meta_with_date.jsonl")
 
-    test_list = get_all_python_tests("abc255_g")
-    print(test_list)
-    program_id="35788058"
-    checkout_python_task("abc255_g")
-    # apply_ground_truth(task_id="abc255_g",program_id=program_id)
-    start_time=time.time()
-    print(run_python_test("abc255_g",program_id,test_list))
-    end_time=time.time()
-    print(f"consume {end_time-start_time} seconds")
-    # python /root/autodl-tmp/ConDefects-main/Code/abc255_g/Python/35788058/correctVersion.py < /root/autodl-tmp/ConDefects-main/Test/abc255/G/in/000.txt
-
-
+#    test_list = get_all_python_tests("abc255_g")
+#    print(test_list)
+#    program_id="35788058"
+#    checkout_python_task("abc255_g")
+#    # apply_ground_truth(task_id="abc255_g",program_id=program_id)
+#    start_time=time.time()
+#    print(run_python_test("abc255_g",program_id,test_list))
+#    end_time=time.time()
+#    print(f"consume {end_time-start_time} seconds")
+# python /root/autodl-tmp/ConDefects-main/Code/abc255_g/Python/35788058/correctVersion.py < /root/autodl-tmp/ConDefects-main/Test/abc255/G/in/000.txt
 
 
 # python3 ConDefects.py runsingle -w /root/autodl-tmp/ConDefects-main  -s abc255_g  -t 000.txt 001.txt 002.txt 003.txt 004.txt 005.txt 006.txt 007.txt 008.txt 009.txt 010.txt 011.txt 012.txt 013.txt 014.txt 015.txt 016.txt 017.txt 018.txt 019.txt 020.txt 021.txt 022.txt 023.txt 024.txt 025.txt 026.txt 027.txt 028.txt 029.txt 030.txt 031.txt 032.txt 033.txt 034.txt 035.txt 036.txt 037.txt 038.txt 039.txt 040.txt 041.txt 042.txt 043.txt 044.txt example0.txt example1.txt --program-id 35788058 --result-path abc255_g-35788058-ee59fb32-5c6a-497b-b5e9-29851e740a7a.json
