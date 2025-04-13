@@ -354,11 +354,11 @@ def get_all_python_tests(task_id=""):
     dir1, dir2 = task_id.split("_")[0], task_id.split("_")[1].capitalize()
     in_path = os.path.sep.join([condefects_test_dir, dir1, dir2, "in"])
     out_path = os.path.sep.join([condefects_test_dir, dir1, dir2, "out"])
-    if not os.path.exists(in_path) and os.path.exists(out_path):
+    if not os.path.exists(in_path) or not os.path.exists(out_path):
         in_path = os.path.sep.join([condefects_test_dir, dir1, "Ex", "in"])
         out_path = os.path.sep.join([condefects_test_dir, dir1, "Ex", "out"])
 
-    if not os.path.exists(in_path) and os.path.exists(out_path):
+    if not os.path.exists(in_path) or not os.path.exists(out_path):
         return []
     else:
         for test_file in os.listdir(in_path):
