@@ -8,18 +8,18 @@ def construct_initial_message(bug: Bug, mode: str, language="java"):
         prompt_header = f"""The following code contains a buggy line that has been removed.\n```{language}\n{bug.masked_code}\n```
 This was the original buggy line which was removed by the infill location:
 ```{language}\n{bug.buggy_lines}\n```\nTest cases look like:```{language}\n{bug.extract_test_code}```\nThe code fails with the following test error:\n```\n{bug.failing_tests}\n```"""
-        prompt_footer = f"After giving reflection, please provide the correct line at the infill location, only single line is allowed. your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
+        prompt_footer = f"After giving reflection, please provide the correct line at the infill location, only single line is allowed. Pay attention to indentation. your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
 
     elif mode == "SH":
         prompt_header = f"""The following code contains a buggy hunk that has been removed.\n```{language}\n{bug.masked_code}\n```
 This was the original buggy hunk which was removed by the infill location:
 ```{language}\n{bug.buggy_lines}\n```\nTest cases look like:```{language}\n{bug.extract_test_code}```\nThe code fails with the following test error:\n```\n{bug.failing_tests}\n```"""
-        prompt_footer = f"After giving reflection, please provide the correct hunk at the infill location, only single hunk is allowed. your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
+        prompt_footer = f"After giving reflection, please provide the correct hunk at the infill location, only single hunk is allowed. Pay attention to indentation. Your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
 
 
     elif mode == "SF":
-        prompt_header = f"""The following code contains a bug\n```{language}\n{bug.code}\n```\nTest cases look like:```{language}\n{bug.extract_test_code}```\nThe code fails with the following test error:\n```\n{bug.failing_tests}\n```"""
-        prompt_footer = "After giving reflection, please provide the correct function, starting with ```{language}"
+        prompt_header = f"The following code contains a bug\n```{language}\n{bug.code}\n```\nTest cases look like:```{language}\n{bug.extract_test_code}```\nThe code fails with the following test error:\n```\n{bug.failing_tests}\n```"
+        prompt_footer = f"After giving reflection, please provide the correct function, starting with ```{language}"
 
     initial_prompt_message = f"""{prompt_header}
 {cot_prompt}\n
