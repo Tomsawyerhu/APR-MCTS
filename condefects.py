@@ -289,6 +289,8 @@ def record_python_task_meta(output_file=""):
                 result = run_python_test(task_id=python_task,program_id=program_id,test_list=testlist)
             except:
                 continue
+            if not isinstance(result,dict) or  result.get(program_id,None) is None:
+                continue
             end_time = time.time()
 
             if (python_task, program_id) in existed_ids:
