@@ -1,0 +1,20 @@
+math_101
+
+Bug
+if (
+    source.substring(startIndex, endIndex).compareTo(
+            getImaginaryCharacter()) != 0) {
+
+
+Fix
+if ((startIndex >= source.length()) ||
+    (endIndex > source.length()) ||
+    source.substring(startIndex, endIndex).compareTo(
+            getImaginaryCharacter()) != 0) {
+
+
+
+MCTS
+if (endIndex > source.length() ||
+source.substring(startIndex, endIndex).compareTo(
+            getImaginaryCharacter()) != 0) {
