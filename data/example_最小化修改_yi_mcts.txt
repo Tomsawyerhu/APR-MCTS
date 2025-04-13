@@ -1,0 +1,27 @@
+math-7
+
+Bug
+long overflow = Integer.MAX_VALUE;
+double r0 = value;
+long a0 = (long)FastMath.floor(r0);
+if (a0 > overflow) {
+    throw new FractionConversionException(value, a0, 1l);
+}
+
+Fix
+
+
+long overflow = Integer.MAX_VALUE;
+double r0 = value;
+long a0 = (long)FastMath.floor(r0);
+if (FastMath.abs(a0) > overflow) {
+    throw new FractionConversionException(value, a0, 1l);
+}
+
+MCTS
+long overflow = Integer.MAX_VALUE;
+double r0 = value;
+long a0 = (long)FastMath.floor(r0);
+if (a0 > overflow || a0 < Integer.MIN_VALUE) {
+    throw new FractionConversionException(value, a0, 1l);
+}
