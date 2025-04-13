@@ -1,0 +1,14 @@
+Bug
+
+if (x < 0 && prev == '-') {
+  add(" ");
+}
+
+Fix
+
+if ((x < 0 || negativeZero) && prev == '-') {
+  add(" ");
+}
+
+Plausible
+    if (prev == '-' && x <= 0) {

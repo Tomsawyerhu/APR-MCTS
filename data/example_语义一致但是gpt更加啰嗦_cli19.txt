@@ -1,0 +1,57 @@
+Bug
+
+    private void processOptionToken(String token, boolean stopAtNonOption)
+    {
+        if (options.hasOption(token))
+        {
+            currentOption = options.getOption(token);
+            tokens.add(token);
+        }
+        else if (stopAtNonOption)
+        {
+            eatTheRest = true;
+            tokens.add(token);
+        }
+    }
+
+Fix
+
+    private void processOptionToken(String token, boolean stopAtNonOption)
+    {
+        if (options.hasOption(token))
+        {
+            currentOption = options.getOption(token);
+        }
+        else if (stopAtNonOption)
+        {
+            eatTheRest = true;
+        }
+
+        tokens.add(token);
+    }
+
+Plausible
+
+private void processOptionToken(String token, boolean stopAtNonOption)
+{
+    if (options.hasOption(token))
+    {
+        currentOption = options.getOption(token);
+        tokens.add(token);
+    }
+    else if (stopAtNonOption)
+    {
+        // If stopAtNonOption is true, we should stop processing and just add the token to the tokens list.
+        tokens.add(token);
+        eatTheRest = true; // Indicates that we should stop processing further options.
+    }
+    else
+    {
+        // If we don't recognize the token and we are not stopping at non-options,
+        // we should not throw an exception but instead treat it as an unrecognized option.
+        tokens.add(token);
+        // Optionally, you might want to log a warning or handle it some other way instead of throwing.
+    }
+}
+
+
