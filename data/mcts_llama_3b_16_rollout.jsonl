@@ -1,0 +1,487 @@
+{"project": "Chart", "bug_id": 1, "eval": "PASS", "patch": "if (dataset == null || this.plot.getIndexOf(this) < 0) {", "rollout": 3}
+{"project": "Chart", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "7", "eval": "PASS", "patch": "private void updateBounds(TimePeriod period, int index) {\n        \n    long start = period.getStart().getTime();\n    long end = period.getEnd().getTime();\n    long halfMiddle = (start + end) / 2;\n\n    if (this.minStartIndex >= 0) {\n        long minStart = getDataItem(this.minStartIndex).getPeriod()\n            .getStart().getTime();\n        if (start < minStart) {\n            this.minStartIndex = index;           \n        }\n    }\n    else {\n        this.minStartIndex = index;\n    }\n    \n    if (this.maxStartIndex >= 0) {\n        long maxStart = getDataItem(this.maxStartIndex).getPeriod()\n            .getStart().getTime();\n        if (start > maxStart) {\n            this.maxStartIndex = index;           \n        }\n    }\n    else {\n        this.maxStartIndex = index;\n    }\n    \n    if (this.minMiddleIndex >= 0) {\n        long minMiddle = getDataItem(this.minMiddleIndex).getPeriod().getStart()\n            .getTime();\n        long maxMiddle = getDataItem(this.minMiddleIndex).getPeriod().getEnd()\n            .getTime();\n        if ((halfMiddle < minMiddle) || (halfMiddle == minMiddle && start < minMiddle)) {\n            this.minMiddleIndex = index;           \n        }\n    }\n    else {\n        this.minMiddleIndex = index;\n    }\n    \n    if (this.maxMiddleIndex >= 0) {\n        long minMiddle = getDataItem(this.maxMiddleIndex).getPeriod().getStart()\n            .getTime();\n        long maxMiddle = getDataItem(this.maxMiddleIndex).getPeriod().getEnd()\n            .getTime();\n        if ((halfMiddle > maxMiddle) || (halfMiddle == maxMiddle && start > maxMiddle)) {\n            this.maxMiddleIndex = index;           \n        }\n    }\n    else {\n        this.maxMiddleIndex = index;\n    }\n    \n    if (this.minEndIndex >= 0) {\n        long minEnd = getDataItem(this.minEndIndex).getPeriod().getEnd()\n            .getTime();\n        if (end < minEnd) {\n            this.minEndIndex = index;           \n        }\n    }\n    else {\n        this.minEndIndex = index;\n    }\n       \n    if (this.maxEndIndex >= 0) {\n        long maxEnd = getDataItem(this.maxEndIndex).getPeriod().getEnd()\n            .getTime();\n        if (end > maxEnd) {\n            this.maxEndIndex = index;           \n        }\n    }\n    else {\n        this.maxEndIndex = index;\n    }\n}", "rollout": 7}
+{"project": "Chart", "bug_id": "8", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "9", "eval": "PASS", "patch": "if (startIndex > endIndex) {", "rollout": 10}
+{"project": "Chart", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "11", "eval": "PASS", "patch": "PathIterator iterator2 = p2.getPathIterator(null);", "rollout": 2}
+{"project": "Chart", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "13", "eval": "PASS", "patch": "new Range(0.0, constraint.getHeight() - h[0] - h[1]),", "rollout": 2}
+{"project": "Chart", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "23", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Chart", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "2", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "8", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "9", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "14", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "19", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "27", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "28", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "29", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "32", "eval": "PASS", "patch": "// if we didn't find one, simply chop at startPos+width\npos = startPos + width;\n\n// check if we are at the end of the string\nif (pos == text.length()) {\n    return pos;\n}", "rollout": 2}
+{"project": "Cli", "bug_id": "35", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Cli", "bug_id": "37", "eval": "PASS", "patch": "private boolean isShortOption(String token)\n{\n    return token.startsWith(\"-\") && (token.length() == 2 || options.hasShortOption(token));\n}\n\n// remove leading \"-\" and \"=value\"", "rollout": 2}
+{"project": "Cli", "bug_id": "38", "eval": "PASS", "patch": "private boolean isShortOption(String token) {\n    // short options (-S, -SV, -S=V, -SV1=V2, -S1S2)\n    if (!token.startsWith(\"-\") || (token.length() == 1 && token.equals(\"-\"))) {\n        return false;\n    }\n\n    // find the first character after the first '-'\n    int prefixLength = 0;\n    while (prefixLength < token.length() && !token.startsWith(\"-\")) {\n        prefixLength++;\n    }\n    String optName = token.substring(prefixLength);\n\n    // find the '=' sign\n    int equalsPos = optName.indexOf('=');\n    String shortOptName;\n    if (equalsPos == -1) {\n        shortOptName = optName;\n    } else {\n        shortOptName = optName.substring(0, equalsPos);\n    }\n\n    // check for several concatenated short options\n    if (options.hasShortOption(shortOptName) || options.hasShortOption(shortOptName + equalsPos)) {\n        return true;\n    }\n\n    // check for several concatenated short options in the token itself\n    for (int i = 0; i < token.length() - 1; i++) {\n        String token1 = token.substring(0, i + 1);\n        String token2 = token.substring(i + 1);\n        if (options.hasShortOption(token1) && options.hasShortOption(token2)) {\n            return true;\n        }\n    }\n\n    return options.hasShortOption(shortOptName);\n}", "rollout": 3}
+{"project": "Cli", "bug_id": "40", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "2", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "7", "eval": "PASS", "patch": "public JSType caseObjectType(ObjectType type) {\n    if (value.equals(\"function\")) {\n        JSType ctorType = getNativeType(U2U_CONSTRUCTOR_TYPE);\n        return resultEqualsValue ? ctorType : type;\n    }\n    return matchesExpectation(\"object\") ? type : null;\n}", "rollout": 6}
+{"project": "Closure", "bug_id": "10", "eval": "PASS", "patch": "return mayBeStringHelper(n);", "rollout": 6}
+{"project": "Closure", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "13", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "14", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "18", "eval": "PASS", "patch": "if (options.dependencyOptions.needsManagement()) {", "rollout": 10}
+{"project": "Closure", "bug_id": "19", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "21", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "22", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "23", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "29", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "31", "eval": "PASS", "patch": "// if (options.tracer.isOn() || traceRoot != null) {", "rollout": 10}
+{"project": "Closure", "bug_id": "32", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "33", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "35", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "36", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "38", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "39", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "40", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "42", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "44", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "48", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "50", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "52", "eval": "PASS", "patch": "return !(s.startsWith(\"0\") && (s.length() > 1 || s.contains(\".\") || !s.matches(\"[0-9.]\")));", "rollout": 12}
+{"project": "Closure", "bug_id": "53", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "55", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "56", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "57", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "58", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "59", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "61", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "62", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "65", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "66", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "67", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "69", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "70", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "71", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "73", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "77", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "78", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "80", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "81", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "82", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "83", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "86", "eval": "PASS", "patch": "return false;", "rollout": 2}
+{"project": "Closure", "bug_id": "87", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "88", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "91", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "92", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "94", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "95", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "96", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "97", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "99", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "101", "eval": "PASS", "patch": "protected CompilerOptions createOptions() {\n  CompilerOptions options = new CompilerOptions();\n  options.setCodingConvention(new ClosureCodingConvention());\n  CompilationLevel level = flags.compilation_level;\n  level.setOptionsForCompilationLevel(options);\n  if (flags.debug) {\n    level.setDebugOptionsForCompilationLevel(options);\n  }\n\n  WarningLevel wLevel = flags.warning_level;\n  wLevel.setOptionsForWarningLevel(options);\n  for (FormattingOption formattingOption : flags.formatting) {\n    formattingOption.applyToOptions(options);\n  }\n  \n  // Set closurePass to false when process_closure_primitives is false\n  if (!flags.process_closure_primitives) {\n    options.closurePass = false;\n  } else {\n    options.closurePass = true;\n  }\n\n  initOptionsFromFlags(options);\n  return options;\n}", "rollout": 2}
+{"project": "Closure", "bug_id": "102", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "104", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "105", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "107", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "109", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "111", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "113", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "114", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "115", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "116", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "117", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "118", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "119", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "120", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "121", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "122", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "123", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "124", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "125", "eval": "PASS", "patch": "if (type.isConstructor()) {", "rollout": 13}
+{"project": "Closure", "bug_id": "126", "eval": "PASS", "patch": "// Just an 'if'.\nif (n.isIf()) {\n  Node ifBlock = n.getFirstChild().getNext();\n  tryMinimizeExits(ifBlock, exitType, labelName);\n  Node elseBlock = ifBlock.getNext();\n  if (elseBlock != null) {\n    tryMinimizeExits(elseBlock, exitType, labelName);\n  }\n}", "rollout": 7}
+{"project": "Closure", "bug_id": "128", "eval": "PASS", "patch": "static boolean isSimpleNumber(String s) {\n  for (int index = 0; index < s.length(); index++) {\n    char c = s.charAt(index);\n    if (c < '0' || c > '9') {\n      return false;\n    }\n  }\n  if (s.length() > 1 && s.charAt(0) == '0') { // Allow if the string has more than one character and starts with a zero\n    return false;\n  }\n  if (s.length() == 0) {\n    return false;\n  } else {\n    return true;\n  }\n}", "rollout": 9}
+{"project": "Closure", "bug_id": "129", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "130", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "131", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "132", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "133", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "140", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "145", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "146", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "150", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "152", "eval": "PASS", "patch": "Object type = safeResolve(typeOfThis, t, scope);\nif (type instanceof ObjectType) {\n  typeOfThis = (ObjectType) type;\n} else if (type instanceof UnionType) {\n  // Handle UnionType case separately\n} else if (type instanceof FunctionPrototypeType) {\n  // Handle FunctionPrototypeType case separately\n} else if (type instanceof FunctionType) {\n  // Handle FunctionType case separately\n} else {\n  // Handle the default case\n}", "rollout": 2}
+{"project": "Closure", "bug_id": "159", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "160", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "161", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "164", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Closure", "bug_id": "168", "eval": "PASS", "patch": "      if (t.getScopeDepth() == 0) {", "rollout": 3}
+{"project": "Closure", "bug_id": "176", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "2", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "9", "eval": "PASS", "patch": "long len = binaryData.length;", "rollout": 8}
+{"project": "Codec", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "16", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Codec", "bug_id": "17", "eval": "PASS", "patch": "return bytes == null ? null : new String(bytes, Charsets.ISO_8859_1);", "rollout": 1}
+{"project": "Codec", "bug_id": "18", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Collections", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "8", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "13", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "14", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "16", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "18", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "19", "eval": "PASS", "patch": "if (hasDiskStart && hasRelativeHeaderOffset) {", "rollout": 4}
+{"project": "Compress", "bug_id": "21", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "23", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "27", "eval": "PASS", "patch": "for ( ;start < end; start++) {\n    final byte currentByte = buffer[start];\n    // CheckStyle:MagicNumber OFF\n    if (currentByte < '0' || currentByte > '7'){\n        throw new IllegalArgumentException(\n                exceptionMessage(buffer, offset, length, start, currentByte));\n    }\n    result = (result << 3) + (currentByte - '0'); // convert from ASCII\n    // CheckStyle:MagicNumber ON\n}\nif ((trailer == 0 || trailer == ' ') && start < end) {\n    throw new IllegalArgumentException(\n        exceptionMessage(buffer, offset, length, start, trailer));\n}", "rollout": 1}
+{"project": "Compress", "bug_id": "28", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "30", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "31", "eval": "PASS", "patch": "if (currentByte == 0 && (start == offset || buffer[start - 1] != '0')) {\n    break;\n}", "rollout": 1}
+{"project": "Compress", "bug_id": "32", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "35", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "36", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "37", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "38", "eval": "PASS", "patch": "if (linkFlag != LF_DIR && file != null) {", "rollout": 2}
+{"project": "Compress", "bug_id": "40", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "41", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "44", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "45", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Compress", "bug_id": "46", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "2", "eval": "PASS", "patch": "public String get(final String name) {\n    if (mapping == null) {\n        throw new IllegalStateException(\n                \"No header mapping was specified, the record values can't be accessed by name\");\n    }\n    final Integer index = mapping.get(name);\n    if (index == null) {\n        throw new IllegalArgumentException(\"No mapping found for key: '\" + name + \"'\");\n    }\n    final int valueIndex = index.intValue();\n    if (valueIndex < 0 || valueIndex >= values.length) {\n        throw new IllegalArgumentException(\"Index out of bounds for key: '\" + name + \"'\");\n    }\n    return values[valueIndex];\n}", "rollout": 8}
+{"project": "Csv", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "9", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Csv", "bug_id": "14", "eval": "PASS", "patch": "if (newRecord && (c == quoteChar || c == delimChar)) {", "rollout": 3}
+{"project": "Csv", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "11", "eval": "PASS", "patch": "case STRING:", "rollout": 1}
+{"project": "Gson", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "13", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "16", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Gson", "bug_id": "18", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "4", "eval": "PASS", "patch": "public char[] expandCurrentSegment()\n{\n    final char[] curr = _currentSegment;\n    // Let's grow by 50% by default\n    final int len = curr.length;\n    // but above intended maximum, slow to increase by 25%\n    int newLen = (len == MAX_SEGMENT_LEN) ? (len * 2) : Math.min(MAX_SEGMENT_LEN, len + (len >> 1));\n    return (_currentSegment = Arrays.copyOf(curr, newLen));\n}", "rollout": 4}
+{"project": "JacksonCore", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "8", "eval": "PASS", "patch": "if (_resultString != null)  return (_resultString.toCharArray());", "rollout": 1}
+{"project": "JacksonCore", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "21", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "23", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonCore", "bug_id": "25", "eval": "PASS", "patch": "if ((i >= 0 && i < 256) && codes[i] != 0) {", "rollout": 1}
+{"project": "JacksonCore", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "5", "eval": "PASS", "patch": "    protected void _addMethodMixIns(Class<?> targetClass, AnnotatedMethodMap methods,\n            Class<?> mixInCls, AnnotatedMethodMap mixIns)\n    {\n        List<Class<?>> parents = new ArrayList<Class<?>>();\n        parents.add(mixInCls);\n        ClassUtil.findSuperTypes(mixInCls, targetClass, parents);\n        for (Class<?> mixin : parents) {\n            for (Method m : mixin.getDeclaredMethods()) {\n                if (!_isIncludableMemberMethod(m)) {\n                    continue;\n                }\n                AnnotatedMethod am = methods.find(m);\n                if (am != null) {\n                    _addMixUnders(m, am);\n                } else {\n                    try {\n                        if (mixIns.find(m) == null) {\n                            mixIns.add(_constructMethod(m));\n                        }\n                    } catch (Exception e) {\n                        // handle the exception\n                    }\n                }\n            }\n        }\n    }", "rollout": 2}
+{"project": "JacksonDatabind", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "8", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "16", "eval": "PASS", "patch": "return ((Annotation)previous == null || ((Annotation)previous).equals(ann));", "rollout": 5}
+{"project": "JacksonDatabind", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "19", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "27", "eval": "PASS", "patch": "if (ext.handlePropertyValue(p, ctxt, propName, null)) {", "rollout": 3}
+{"project": "JacksonDatabind", "bug_id": "28", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "34", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "35", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "37", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "39", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "42", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "45", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "46", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "47", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "49", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "51", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "54", "eval": "PASS", "patch": "BeanPropertyWriter buildWriter(SerializerProvider prov,\n            BeanPropertyDefinition propDef, JavaType declaredType, JsonSerializer<?> ser,\n            TypeSerializer typeSer, TypeSerializer contentTypeSer,\n            AnnotatedMember am, boolean defaultUseStaticTyping)\n        throws JsonMappingException {\n    // do we have annotation that forces type to use (to declared type or its super type)?\n    JavaType serializationType = findSerializationType(am, defaultUseStaticTyping, declaredType);\n\n    // Container types can have separate type serializers for content (value / element) type\n    if (contentTypeSer != null) {\n        if (serializationType == null) {\n            serializationType = declaredType;\n        }\n        JavaType ct = serializationType.getContentType();\n        if (ct == null) {\n            if (contentTypeSer == null) {\n                // Handle the case when content type is null\n                serializationType = declaredType;\n                return new BeanPropertyWriter(propDef, am, _beanDesc.getClassAnnotations(), declaredType, ser, typeSer, serializationType, false, BeanPropertyWriter.MARKER_FOR_EMPTY);\n            } else {\n                throw new IllegalStateException(\"Problem trying to create BeanPropertyWriter for property '\"\n                        + propDef.getName() + \"' (of type \" + _beanDesc.getType() + \"); serialization type \" + serializationType + \" has no content\");\n            }\n        }\n        serializationType = serializationType.withContentTypeHandler(contentTypeSer);\n        ct = serializationType.getContentType();\n    }\n    \n    Object valueToSuppress = null;\n    boolean suppressNulls = false;\n\n    JsonInclude.Value inclV = _defaultInclusion.withOverrides(propDef.findInclusion());\n    JsonInclude.Include inclusion = inclV.getValueInclusion();\n    if (inclusion == JsonInclude.Include.USE_DEFAULTS) { // should not occur but...\n        inclusion = JsonInclude.Include.ALWAYS;\n    }\n\n    // 12-Jul-2016, tatu: [databind#1256] Need to make sure we consider type refinement\n    JavaType actualType = (serializationType == null) ? declaredType : serializationType;\n    \n    switch (inclusion) {\n    case NON_DEFAULT:\n        // 11-Nov-2015, tatu: This is tricky because semantics differ between cases,\n        //    so that if enclosing class has this, we may need to values of property,\n        //    whereas for global defaults OR per-property overrides, we have more\n        //    static definition. Sigh.\n        // First: case of class specifying it; try to find POJO property defaults\n        if (_defaultInclusion.getValueInclusion() == JsonInclude.Include.NON_DEFAULT) {\n            valueToSuppress = getPropertyDefaultValue(propDef.getName(), am, actualType);\n        } else {\n            valueToSuppress = getDefaultValue(actualType);\n        }\n        if (valueToSuppress == null) {\n            suppressNulls = true;\n        } else {\n            if (valueToSuppress.getClass().isArray()) {\n                valueToSuppress = ArrayBuilders.getArrayComparator(valueToSuppress);\n            }\n        }\n\n        break;\n    case NON_ABSENT: \n        // Always set valueToSuppress to Marker.FOR_EMPTY when inclusion is NON_ABSENT\n        valueToSuppress = BeanPropertyWriter.MARKER_FOR_EMPTY;\n        suppressNulls = false;\n        // and for referential types, also \"empty\", which in their case means \"absent\"\n        if (declaredType.isReferenceType()) {\n            // Since suppressNulls is false, no further action is required\n        }\n        break;\n    case NON_EMPTY:\n        // always suppress nulls\n        suppressNulls = true;\n        // but possibly also 'empty' values:\n        valueToSuppress = BeanPropertyWriter.MARKER_FOR_EMPTY;\n        break;\n    case NON_NULL:\n        suppressNulls = true;\n        // fall through\n    case ALWAYS: // default\n    default:\n        // we may still want to suppress empty collections, as per [JACKSON-254]:\n        if (declaredType.isContainerType()\n                && !_config.isEnabled(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS)) {\n            valueToSuppress = BeanPropertyWriter.MARKER_FOR_EMPTY;\n        }\n        break;\n    }\n    BeanPropertyWriter bpw = new BeanPropertyWriter(propDef,\n            am, _beanDesc.getClassAnnotations(), declaredType,\n            ser, typeSer, serializationType, suppressNulls, valueToSuppress);\n\n    // How about custom null serializer?\n    Object serDef = _annotationIntrospector.findNullSerializer(am);\n    if (serDef != null) {\n        bpw.assignNullSerializer(prov.serializerInstance(am, serDef));\n    }\n    // And then, handling of unwrapping\n    NameTransformer unwrapper = _annotationIntrospector.findUnwrappingNameTransformer(am);\n    if (unwrapper != null) {\n        bpw = bpw.unwrappingWriter(unwrapper);\n    }\n    return bpw;\n}", "rollout": 4}
+{"project": "JacksonDatabind", "bug_id": "57", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "58", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "62", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "63", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "64", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "67", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "70", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "74", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "76", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "82", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "83", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "85", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "88", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "89", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "91", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "92", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "96", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "97", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "99", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "100", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "101", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "102", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonDatabind", "bug_id": "107", "eval": "PASS", "patch": "return ctxt.findContextualValueDeserializer(_baseType, _property);", "rollout": 5}
+{"project": "JacksonDatabind", "bug_id": "112", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonXml", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonXml", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonXml", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JacksonXml", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "2", "eval": "PASS", "patch": "tq.addFirst(\"</\" + tagName + \">\");", "rollout": 6}
+{"project": "Jsoup", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "13", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "19", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "24", "eval": "PASS", "patch": "t.tagPending.appendTagName(name.toLowerCase());", "rollout": 6}
+{"project": "Jsoup", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "27", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "32", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "33", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "34", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "35", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "37", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "38", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "39", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "40", "eval": "PASS", "patch": "attr(\"name\", name);", "rollout": 15}
+{"project": "Jsoup", "bug_id": "41", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "42", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "43", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "45", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "46", "eval": "PASS", "patch": "accum.append(\"&#x\").append(Integer.toHexString(codePoint)).append(';');", "rollout": 1}
+{"project": "Jsoup", "bug_id": "47", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "48", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "49", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "50", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "51", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "53", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "54", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "55", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "57", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "59", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "61", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "62", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "64", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "66", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "68", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "70", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "72", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "75", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "76", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "77", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "80", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "82", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "84", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "85", "eval": "PASS", "patch": "public Attribute(String key, String val, Attributes parent) {\n    Validate.notNull(key);\n    this.key = key.trim();\n    this.val = val;\n    if (this.key.isEmpty()) {\n        throw new IllegalArgumentException(\"Key cannot be empty\");\n    }\n    this.parent = parent;\n}", "rollout": 1}
+{"project": "Jsoup", "bug_id": "86", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "88", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "89", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "90", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Jsoup", "bug_id": "93", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JxPath", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JxPath", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JxPath", "bug_id": "8", "eval": "PASS", "patch": "private boolean compute(Object left, Object right) {\n    left = reduce(left);\n    right = reduce(right);\n\n    if (left instanceof InitialContext) {\n        ((InitialContext) left).reset();\n    }\n    if (right instanceof InitialContext) {\n        ((InitialContext) right).reset();\n    }\n    if (left instanceof Iterator && right instanceof Iterator) {\n        return findMatch((Iterator) left, (Iterator) right);\n    }\n    if (left instanceof Iterator) {\n        return containsMatch((Iterator) left, right);\n    }\n    if (right instanceof Iterator) {\n        return containsMatch((Iterator) right, left);\n    }\n    double ld = InfoSetUtil.doubleValue(left);\n    double rd = InfoSetUtil.doubleValue(right);\n\n    if (Double.isNaN(ld) && Double.isNaN(rd)) {\n        return Double.isInfinite(ld) && Double.isInfinite(rd); // Compare NaN value with another Infinite value\n    } else if (Double.isNaN(ld) || Double.isNaN(rd)) {\n        return false; // if one and only one value is NaN\n    } else {\n        return evaluateCompare(ld < rd ? -1 : ld == rd ? 0 : 1);\n    }\n}", "rollout": 10}
+{"project": "JxPath", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JxPath", "bug_id": "12", "eval": "PASS", "patch": "if (wildcard\n    || testName.getName()\n                .equals(DOMNodePointer.getLocalName(node))) {\n    return ((wildcard && testPrefix == null) \n            || !wildcard && testName.getName().equals(DOMNodePointer.getLocalName(node))) ? true : equalStrings(namespaceURI, DOMNodePointer.getNamespaceURI(node));\n}", "rollout": 10}
+{"project": "JxPath", "bug_id": "21", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "JxPath", "bug_id": "22", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "6", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "9", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "14", "eval": "PASS", "patch": "public static boolean equals(CharSequence cs1, CharSequence cs2) {\n    if (cs1 == cs2) {\n        return true;\n    }\n    if (cs1 == null || cs2 == null) {\n        return false;\n    }\n    int len1 = cs1.length();\n    int len2 = cs2.length();\n    if (len1 != len2) {\n        return false;\n    }\n    char[] s1Array = cs1.toString().toCharArray();\n    char[] s2Array = cs2.toString().toCharArray();\n    for (int i = 0; i < len1; i++) {\n        if (s1Array[i] != s2Array[i]) {\n            return false;\n        }\n    }\n    return true;\n}", "rollout": 1}
+{"project": "Lang", "bug_id": "16", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "18", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "19", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "21", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "22", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "27", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "28", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "31", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "33", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "37", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "38", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "39", "eval": "PASS", "patch": "if (textIndex != -1) break;", "rollout": 15}
+{"project": "Lang", "bug_id": "40", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "42", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "43", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "44", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "45", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "48", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "49", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "51", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "52", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "53", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "54", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "55", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "57", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "58", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "59", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "61", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Lang", "bug_id": "65", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "2", "eval": "PASS", "patch": "return (double) getNumberOfSuccesses() * getSampleSize() / getPopulationSize();", "rollout": 10}
+{"project": "Math", "bug_id": "3", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "9", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "10", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "11", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "13", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "17", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "19", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "21", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "23", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "26", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "27", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "28", "eval": "PASS", "patch": "private Integer getPivotRow(SimplexTableau tableau, final int col) {\n    // create a list of all the rows that tie for the lowest score in the minimum ratio test\n    List<Integer> minRatioPositions = new ArrayList<Integer>();\n    double minRatio = Double.MAX_VALUE;\n    for (int i = tableau.getNumObjectiveFunctions(); i < tableau.getHeight(); i++) {\n        final double rhs = tableau.getEntry(i, tableau.getWidth() - 1);\n        final double entry = tableau.getEntry(i, col);\n\n        if (Precision.compareTo(entry, 0d, maxUlps) > 0) {\n            final double ratio = rhs / entry;\n            // check if the entry is strictly equal to the current min ratio\n            // do not use a ulp/epsilon check\n            final int cmp = Double.compare(ratio, minRatio);\n            if (cmp == 0) {\n                minRatioPositions.add(i);\n            } else if (cmp < 0) {\n                minRatio = ratio;\n                minRatioPositions.clear();\n                minRatioPositions.add(i);\n            }\n        }\n    }\n\n    if (minRatioPositions.size() == 0) {\n        return null;\n    } else if (minRatioPositions.size() > 1) {\n        // there's a degeneracy as indicated by a tie in the minimum ratio test\n\n        // 1. check if there's an artificial variable that can be forced out of the basis\n        for (Integer row : minRatioPositions) {\n            for (int i = 0; i < tableau.getNumArtificialVariables(); i++) {\n                int column = i + tableau.getArtificialVariableOffset();\n                final double entry = tableau.getEntry(row, column);\n                if (Precision.equals(entry, 1d, maxUlps) && row.equals(tableau.getBasicRow(column))) {\n                    return row;\n                }\n            }\n        }\n\n        // 2. apply Bland's rule to prevent cycling:\n        //    take the row for which the corresponding basic variable has the smallest index\n        //\n        // see http://www.stanford.edu/class/msande310/blandrule.pdf\n        // see http://en.wikipedia.org/wiki/Bland%27s_rule (not equivalent to the above paper)\n        //\n        // Additional heuristic: if we did not get a solution after half of maxIterations\n        //                       revert to the simple case of just returning the top-most row\n        // This heuristic is based on empirical data gathered while investigating MATH-828.\n        Integer minRow = null;\n        int minIndex = tableau.getWidth();\n        boolean found = false;\n        for (Integer row : minRatioPositions) {\n            int i = tableau.getNumObjectiveFunctions();\n            for (; i < tableau.getWidth() - 1 && !found; i++) {\n                if (row == tableau.getBasicRow(i)) {\n                    if (i < minIndex) {\n                        minIndex = i;\n                        minRow = row;\n                        found = true;\n                    }\n                }\n            }\n        }\n        if (!found) {\n            // if no row is found after iterating over the minimum ratio positions, revert to the top-most row\n            minRow = minRatioPositions.get(0);\n        }\n        return minRow;\n    }\n    return minRatioPositions.get(0);\n}", "rollout": 2}
+{"project": "Math", "bug_id": "30", "eval": "PASS", "patch": "final double n1n2prod = n1 * n2;", "rollout": 9}
+{"project": "Math", "bug_id": "31", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "32", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "33", "eval": "PASS", "patch": "if (Precision.compareTo(entry, 1.0e-6, maxUlps) > 0) {", "rollout": 1}
+{"project": "Math", "bug_id": "34", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "38", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "39", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "40", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "41", "eval": "PASS", "patch": "for (int i = begin; i < begin + length; i++) {", "rollout": 1}
+{"project": "Math", "bug_id": "42", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "43", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "45", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "48", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "50", "eval": "PASS", "patch": "            // If the function value of the last approximation is too small,\n            // given the function value accuracy, then we can't get closer to\n            // the root than we already are.\n            if (FastMath.abs(f1) <= ftol) {\n                // Check if the interval is being inverted\n                if (inverted) {\n                    if (x0 < x1) {\n                        return x0;\n                    } else {\n                        return x1;\n                    }\n                } else {\n                    if (x0 < x1) {\n                        return x1;\n                    } else {\n                        return x0;\n                    }\n                }\n            }", "rollout": 1}
+{"project": "Math", "bug_id": "51", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "52", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "53", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "54", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "55", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "56", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "57", "eval": "PASS", "patch": "double sum = 0;", "rollout": 2}
+{"project": "Math", "bug_id": "58", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "59", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "60", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "63", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "64", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "69", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "70", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "72", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "73", "eval": "PASS", "patch": "if (f.value(initial) * f.value(max) >= 0 || f.value(initial) * f.value(yMin) >= 0 ||\n   f.value(max) * f.value(yMin) >= 0) {\n    throw new IllegalArgumentException(\"No bracketing\");\n}", "rollout": 2}
+{"project": "Math", "bug_id": "74", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "75", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "78", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "79", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "80", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "82", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "84", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "85", "eval": "PASS", "patch": "if ((fa * fb > 0.0) || numIterations >= maximumIterations) {", "rollout": 12}
+{"project": "Math", "bug_id": "86", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "87", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "88", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "89", "eval": "PASS", "patch": "public void addValue(Object v) {\n    if (v instanceof Comparable) {\n        addValue((Comparable<?>) v);\n    } else {\n        throw new IllegalArgumentException(\"Value is not comparable\");\n    }\n}", "rollout": 2}
+{"project": "Math", "bug_id": "91", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "94", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "95", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "96", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "97", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "101", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "102", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "103", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "104", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "105", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Math", "bug_id": "106", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "1", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "8", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "12", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "13", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "18", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "22", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "26", "eval": "PASS", "patch": "        primitiveValues.put(double.class, 0.0D);", "rollout": 2}
+{"project": "Mockito", "bug_id": "27", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "28", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "29", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "33", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "34", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Mockito", "bug_id": "38", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "4", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "5", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "7", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "8", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "14", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "15", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "16", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "17", "eval": "PASS", "patch": "public long adjustOffset(long instant, boolean earlierOrLater) {\n    // a bit messy, but will work in all non-pathological cases\n        \n    // evaluate 3 hours before and after to work out if anything is happening\n    long instantBefore = instant - 3 * DateTimeConstants.MILLIS_PER_HOUR;\n    long instantAfter = instant + 4 * DateTimeConstants.MILLIS_PER_HOUR;\n    if (instantBefore == instantAfter) {\n        return instant;  // not an overlap (less than is a gap, equal is normal case)\n    }\n        \n    // work out range of instants that have duplicate local times\n    long local = convertUTCToLocal(instant);\n    return convertLocalToUTC(local, false, earlierOrLater ? instantAfter : instantBefore);\n        \n    // calculate result\n    // currently in later offset\n    // currently in earlier offset\n}", "rollout": 1}
+{"project": "Time", "bug_id": "18", "eval": "PASS", "patch": "private static int isLeapDayJulian(int year, int monthOfYear) {\n    String[] monthNames = {\"January\", \"February\", \"March\", \"April\", \"May\", \"June\",\n                          \"July\", \"August\", \"September\", \"October\", \"November\", \"December\"};\n    int[][] leapDayMonths = {{31, 28, 31, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},\n                             {28, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 30},\n                             // month of February will be a leap year in Julian calendar for every 4 years\n                             {31, 29, 31, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};\n\n    int totalDays = 0;\n\n    for (int i = 0; i < monthOfYear; i++) {\n        totalDays += leapDayMonths[i][0];  // Fix: changed [1] to [0]\n    }\n    totalDays += 1;  // Also added a 1 to account for the day of the month\n    return (totalDays % 7) == 0 ? 0 : 1;\n}", "rollout": 14}
+{"project": "Time", "bug_id": "19", "eval": "PASS", "patch": "} else {", "rollout": 2}
+{"project": "Time", "bug_id": "20", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "22", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "23", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "24", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "25", "eval": "FAIL", "patch": "", "rollout": 16}
+{"project": "Time", "bug_id": "27", "eval": "FAIL", "patch": "", "rollout": 16}
