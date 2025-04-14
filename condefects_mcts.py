@@ -39,42 +39,7 @@ mask_mode = False
 output_file = ""
 
 black_list = ["abc234_h", "abc319_b"]
-white_list = ['abc224_f', 'abc224_h', 'abc226_d', 'abc230_c', 'abc230_e', 'abc233_b', 'abc233_c', 'abc233_e',
-              'abc235_c', 'abc236_h', 'abc237_b', 'abc237_f', 'abc237_h', 'abc238_b', 'abc239_g', 'abc240_d',
-              'abc241_a', 'abc241_b', 'abc242_b', 'abc243_b', 'abc244_b', 'abc245_d', 'abc246_a', 'abc247_a',
-              'abc247_d', 'abc248_c', 'abc249_f', 'abc250_a', 'abc250_b', 'abc251_c', 'abc252_a', 'abc253_b',
-              'abc254_c', 'abc255_a', 'abc255_b', 'abc257_b', 'abc257_c', 'abc259_a', 'abc260_e', 'abc262_a',
-              'abc262_c', 'abc262_d', 'abc265_c', 'abc266_e', 'abc267_a', 'abc268_b', 'abc268_c', 'abc269_b',
-              'abc269_c', 'abc271_d', 'abc271_e', 'abc272_a', 'abc272_b', 'abc273_c', 'abc274_c', 'abc275_a',
-              'abc275_c', 'abc276_b', 'abc278_d', 'abc278_g', 'abc279_d', 'abc279_e', 'abc280_e', 'abc282_c',
-              'abc282_e', 'abc282_f', 'abc284_c', 'abc284_d', 'abc285_c', 'abc286_f', 'abc289_a', 'abc289_b',
-              'abc291_a', 'abc291_b', 'abc292_e', 'abc292_f', 'abc293_b', 'abc293_c', 'abc293_f', 'abc296_b',
-              'abc296_c', 'abc297_c', 'abc297_d', 'abc298_e', 'abc299_a', 'abc299_e', 'abc299_h', 'abc302_b',
-              'abc303_a', 'abc303_b', 'abc303_e', 'abc304_a', 'abc304_f', 'abc305_b', 'abc306_e', 'abc307_c',
-              'abc307_e', 'abc308_b', 'abc309_b', 'abc310_f', 'abc311_b', 'abc312_b', 'abc313_c', 'abc313_e',
-              'abc313_f', 'abc314_e', 'abc314_h', 'abc315_h', 'abc318_b', 'abc320_a', 'abc320_c', 'abc322_c',
-              'abc326_g', 'abc327_g', 'abc329_b', 'abc329_f', 'abc331_c', 'abc332_b', 'abc332_d', 'abc332_e',
-              'abc333_a', 'abc334_a', 'abc334_b', 'abc335_d', 'abc338_b', 'abc338_e', 'abc341_a', 'abc342_b',
-              'abc344_a', 'abc345_c', 'abc348_d', 'abc349_c', 'abc349_d', 'abc350_b', 'abc353_d', 'abc354_c',
-              'abc354_g', 'abc357_e', 'abc360_c', 'agc063_a', 'agc065_a', 'arc135_a', 'arc137_b', 'arc146_c',
-              'arc150_e', 'arc152_a', 'arc156_c', 'arc156_d', 'arc162_e', 'arc164_c', 'arc165_a', 'arc168_a',
-              'arc170_a', 'arc172_c', 'arc180_c', 'abc223_g', 'abc224_d', 'abc225_d', 'abc229_e', 'abc229_f',
-              'abc233_f', 'abc234_d', 'abc234_g', 'abc236_e', 'abc237_d', 'abc238_e', 'abc240_e', 'abc241_g',
-              'abc242_d', 'abc242_e', 'abc243_f', 'abc244_e', 'abc244_g', 'abc245_f', 'abc248_f', 'abc249_d',
-              'abc250_h', 'abc251_f', 'abc252_e', 'abc253_f', 'abc256_g', 'abc258_c', 'abc259_e', 'abc260_f',
-              'abc261_e', 'abc262_e', 'abc262_g', 'abc263_e', 'abc264_e', 'abc266_d', 'abc266_f', 'abc266_g',
-              'abc267_f', 'abc267_h', 'abc268_g', 'abc269_d', 'abc270_c', 'abc271_g', 'abc274_f', 'abc278_e',
-              'abc283_e', 'abc284_g', 'abc291_e', 'abc292_d', 'abc294_e', 'abc295_g', 'abc298_c', 'abc300_d',
-              'abc302_e', 'abc302_f', 'abc304_d', 'abc305_e', 'abc306_g', 'abc309_d', 'abc309_g', 'abc311_e',
-              'abc311_g', 'abc313_g', 'abc315_c', 'abc318_g', 'abc319_c', 'abc320_d', 'abc321_d', 'abc322_f',
-              'abc324_e', 'abc326_f', 'abc328_e', 'abc328_f', 'abc334_g', 'abc336_g', 'abc340_g', 'abc343_d',
-              'abc343_e', 'abc344_c', 'abc349_g', 'abc350_d', 'abc353_c', 'agc063_c', 'abc223_h', 'abc225_e',
-              'abc230_g', 'abc232_f', 'abc235_h', 'abc236_d', 'abc238_g', 'abc240_g', 'abc240_h', 'abc241_c',
-              'abc247_g', 'abc251_h', 'abc257_h', 'abc260_g', 'abc261_g', 'abc265_g', 'abc266_h', 'abc267_g',
-              'abc273_g', 'abc274_e', 'abc275_f', 'abc277_h', 'abc283_f', 'abc283_h', 'abc284_f', 'abc287_h',
-              'abc288_e', 'abc288_g', 'abc289_h', 'abc296_h', 'abc298_g', 'abc300_g', 'abc301_e', 'abc304_c',
-              'abc308_g', 'abc319_g', 'abc321_g', 'abc324_g', 'abc325_c', 'abc332_g', 'abc335_g', 'abc336_f',
-              'abc359_e', 'abc359_f']
+white_list = ['abc223_a', 'abc224_a', 'abc225_a', 'abc226_a', 'abc226_b', 'abc229_a', 'abc229_b', 'abc230_a', 'abc230_b', 'abc230_e', 'abc232_b', 'abc232_d', 'abc233_a', 'abc233_b', 'abc233_c', 'abc233_e', 'abc234_a', 'abc234_b', 'abc234_c', 'abc234_e', 'abc235_b', 'abc235_c', 'abc236_a', 'abc236_b', 'abc237_a', 'abc238_b', 'abc238_c', 'abc239_a', 'abc239_g', 'abc240_a', 'abc240_d', 'abc241_a', 'abc241_b', 'abc241_e', 'abc242_a', 'abc242_b', 'abc243_b', 'abc244_b', 'abc244_c', 'abc244_d', 'abc245_a', 'abc245_b', 'abc246_a', 'abc247_a', 'abc247_b', 'abc247_c', 'abc247_d', 'abc247_e', 'abc248_a', 'abc248_c', 'abc249_a', 'abc249_b', 'abc249_f', 'abc250_b', 'abc251_a', 'abc251_c', 'abc251_d', 'abc252_a', 'abc252_b', 'abc252_c', 'abc253_a', 'abc253_b', 'abc253_d', 'abc254_a', 'abc254_c', 'abc255_a', 'abc255_b', 'abc256_b', 'abc257_a', 'abc257_b', 'abc257_c', 'abc257_e', 'abc258_a', 'abc258_b', 'abc259_a', 'abc259_b', 'abc260_a', 'abc260_e', 'abc261_a', 'abc262_a', 'abc262_c', 'abc262_d', 'abc263_a', 'abc263_b', 'abc263_c', 'abc264_a', 'abc264_b', 'abc265_a', 'abc265_c', 'abc266_b', 'abc266_c', 'abc266_e', 'abc267_a', 'abc267_b', 'abc268_b', 'abc268_c', 'abc269_a', 'abc269_b', 'abc269_c', 'abc269_e', 'abc270_a', 'abc270_b', 'abc271_a', 'abc271_c', 'abc271_d', 'abc271_e', 'abc272_c', 'abc273_b', 'abc274_a', 'abc275_a', 'abc275_b', 'abc275_c', 'abc275_d', 'abc276_a', 'abc276_b', 'abc276_d', 'abc277_a', 'abc277_b', 'abc278_a', 'abc278_b', 'abc278_d', 'abc279_a', 'abc279_b', 'abc279_d', 'abc279_e', 'abc280_b', 'abc280_c', 'abc280_e', 'abc281_a', 'abc281_b', 'abc282_a', 'abc282_c', 'abc282_e', 'abc282_f', 'abc283_a', 'abc283_c', 'abc283_d', 'abc284_d', 'abc285_a', 'abc285_c', 'abc286_a', 'abc286_f', 'abc287_a', 'abc288_b', 'abc289_a', 'abc289_b', 'abc289_c', 'abc290_b', 'abc290_d', 'abc291_a', 'abc291_b', 'abc292_b', 'abc292_f', 'abc293_b', 'abc293_c', 'abc293_e', 'abc293_f', 'abc294_a', 'abc294_b', 'abc295_a', 'abc295_b', 'abc296_b', 'abc296_c', 'abc297_a', 'abc297_b', 'abc297_c', 'abc297_d', 'abc298_a', 'abc298_b', 'abc298_e', 'abc299_a', 'abc299_d', 'abc299_e', 'abc300_a', 'abc300_b', 'abc300_c', 'abc300_e', 'abc301_a', 'abc301_b', 'abc301_d', 'abc302_a', 'abc302_b', 'abc303_a', 'abc303_b', 'abc304_a', 'abc304_b', 'abc304_f', 'abc305_a', 'abc305_b', 'abc306_b', 'abc306_e', 'abc307_a', 'abc307_b', 'abc307_c', 'abc307_d', 'abc307_e', 'abc308_a', 'abc308_b', 'abc309_a', 'abc309_b', 'abc310_a', 'abc310_b', 'abc310_c', 'abc311_a', 'abc311_b', 'abc312_a', 'abc312_b', 'abc313_a', 'abc313_b', 'abc313_c', 'abc313_d', 'abc313_e', 'abc313_f', 'abc314_a', 'abc314_b', 'abc314_e', 'abc315_a', 'abc315_b', 'abc315_h', 'abc318_a', 'abc318_c', 'abc319_a', 'abc319_b', 'agc058_a', 'agc060_b', 'agc061_a', 'agc063_a', 'agc064_a', 'arc128_b', 'arc129_a', 'arc129_c', 'arc131_a', 'arc131_c', 'arc133_a', 'arc133_d', 'arc134_a', 'arc135_a', 'arc136_a', 'arc136_c', 'arc137_a', 'arc137_b', 'arc138_b', 'arc140_e', 'arc141_b', 'arc142_a', 'arc142_b', 'arc142_c', 'arc143_a', 'arc143_c', 'arc144_a', 'arc145_a', 'arc145_b', 'arc146_a', 'arc146_c', 'arc147_b', 'arc149_a', 'arc150_e', 'arc152_a', 'arc152_d', 'arc153_a', 'arc155_a', 'arc156_a', 'arc156_c', 'arc156_d', 'arc157_a', 'arc159_a', 'arc159_b', 'arc161_a', 'arc162_b', 'arc162_c', 'arc162_e', 'arc163_a', 'arc163_c', 'arc164_c', 'arc165_a', 'abc224_b', 'abc224_c', 'abc224_d', 'abc225_d', 'abc229_e', 'abc229_f', 'abc232_e', 'abc235_e', 'abc236_e', 'abc240_e', 'abc241_d', 'abc241_g', 'abc242_c', 'abc242_d', 'abc242_e', 'abc244_e', 'abc245_f', 'abc248_d', 'abc248_e', 'abc249_d', 'abc250_d', 'abc250_e', 'abc251_e', 'abc252_e', 'abc253_f', 'abc254_e', 'abc255_e', 'abc258_c', 'abc259_e', 'abc260_f', 'abc261_e', 'abc262_e', 'abc263_e', 'abc264_e', 'abc266_d', 'abc266_g', 'abc267_f', 'abc268_e', 'abc274_d', 'abc277_e', 'abc278_e', 'abc281_f', 'abc283_e', 'abc286_d', 'abc287_c', 'abc289_e', 'abc291_e', 'abc292_c', 'abc292_d', 'abc297_e', 'abc298_c', 'abc298_d', 'abc300_d', 'abc302_f', 'abc304_d', 'abc305_e', 'abc306_g', 'abc308_c', 'abc309_d', 'abc311_e', 'abc312_f', 'abc313_g', 'abc314_d', 'abc315_c', 'abc319_c', 'abc319_f', 'agc055_a', 'agc063_c', 'abc225_e', 'abc238_g', 'abc241_c', 'abc261_d', 'abc264_c', 'abc267_e', 'abc274_e', 'abc275_f', 'abc284_f', 'abc300_g', 'abc301_e', 'abc304_c', 'abc319_g', 'abc223_d', 'abc223_f', 'abc225_c', 'abc226_c', 'abc229_d', 'abc230_d', 'abc232_c', 'abc235_d', 'abc237_c', 'abc238_a', 'abc238_d', 'abc239_c', 'abc243_c', 'abc243_d', 'abc246_d', 'abc246_e', 'abc249_c', 'abc250_c', 'abc251_b', 'abc252_d', 'abc253_e', 'abc255_c', 'abc256_d', 'abc257_d', 'abc257_f', 'abc257_g', 'abc258_d', 'abc258_e', 'abc259_c', 'abc261_b', 'abc263_d', 'abc265_b', 'abc265_d', 'abc267_c', 'abc267_d', 'abc268_d', 'abc270_d', 'abc272_d', 'abc272_e', 'abc273_d', 'abc277_d', 'abc278_c', 'abc280_d', 'abc281_d', 'abc286_e', 'abc287_d', 'abc288_d', 'abc289_d', 'abc290_c', 'abc291_c', 'abc291_d', 'abc291_f', 'abc296_d', 'abc299_c', 'abc300_f', 'abc302_c', 'abc303_c', 'abc303_d', 'abc309_c', 'abc309_e', 'abc312_c', 'abc315_f', 'abc318_e', 'abc319_d', 'agc056_c', 'agc057_a', 'agc057_b', 'agc058_b', 'agc059_a', 'agc059_b', 'agc060_a', 'agc062_a', 'agc062_c', 'agc063_b', 'arc128_c', 'arc128_d', 'arc128_e', 'arc129_b', 'arc129_d', 'arc130_b', 'arc130_f', 'arc131_b', 'arc131_d', 'arc131_e', 'arc132_a', 'arc132_b', 'arc132_c', 'arc132_d', 'arc133_b', 'arc134_b', 'arc134_d', 'arc135_b', 'arc135_c', 'arc135_d', 'arc136_b', 'arc136_d', 'arc137_c', 'arc137_d', 'arc138_a', 'arc138_c', 'arc138_d', 'arc139_a', 'arc139_b', 'arc139_c', 'arc139_d', 'arc140_a', 'arc140_b', 'arc140_c', 'arc140_d', 'arc141_a', 'arc141_c', 'arc141_e', 'arc143_d', 'arc144_b', 'arc145_c', 'arc145_d', 'arc145_e', 'arc146_b', 'arc146_d', 'arc147_c', 'arc147_e', 'arc148_a', 'arc148_b', 'arc148_c', 'arc148_d', 'arc148_e', 'arc149_c', 'arc149_d', 'arc150_a', 'arc150_b', 'arc151_a', 'arc151_b', 'arc151_c', 'arc151_e', 'arc152_b', 'arc152_c', 'arc153_b', 'arc153_c', 'arc154_b', 'arc154_c', 'arc154_d', 'arc155_b', 'arc155_c', 'arc156_b', 'arc157_b', 'arc157_d', 'arc157_e', 'arc158_a', 'arc158_b', 'arc158_c', 'arc158_d', 'arc159_c', 'arc159_d', 'arc160_a', 'arc160_b', 'arc160_c', 'arc161_b', 'arc161_c', 'arc161_d', 'arc163_b', 'arc164_a', 'arc164_d', 'arc164_e', 'arc165_b', 'arc165_c', 'arc165_d']
 
 genetic_config = {
     "pool_size": 10,  # 保留10个
@@ -377,9 +342,9 @@ def mcts_repair():
             buggy_code, correct_code, bug_location = read_python_program_code(line['task_id'], line['program_id'])
             if (line['task_id'], line['program_id']) in existed_ids:
                 continue
-            # # 白名单模式
-            # if line['task_id'] not in white_list:
-            #     continue
+            # 白名单模式
+            if line['task_id'] not in white_list:
+                continue
             # # 黑名单模式
             # if line['task_id'] in black_list:
             #     continue
