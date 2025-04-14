@@ -14,8 +14,8 @@ condefects_test_dir = condefects_dir + "/Test"
 condefects_coverage_dir = condefects_dir + "/Coverage"
 condefects_tmp_dir = condefects_dir + "/Tmp"
 
-if not os.path.exists(condefects_tmp_dir):
-    os.makedirs(condefects_tmp_dir)
+# if not os.path.exists(condefects_tmp_dir):
+#     os.makedirs(condefects_tmp_dir)
 
 
 class TimeoutException(Exception):
@@ -254,6 +254,9 @@ def run_python_test(task_id="", program_id="", test_list=[]):
         "test_list": test_list
     }
 
+    # 删除输出文件
+    os.system(f"rm -rf {output_file}")
+
     return new_result
 
 
@@ -457,8 +460,9 @@ def collect_import():
 
 if __name__ == '__main__':
     # print(run_python_test("abc229_d", ['000.txt', '001.txt']))
-    record_python_task_meta(output_file="./condefects_meta.jsonl")
-    # incorporate_date_meta("./data/condefects_meta.jsonl", "./data/date.txt", "./data/condefects_meta_with_date.jsonl")
+    # record_python_task_meta(output_file="./condefects_meta.jsonl")
+    incorporate_date_meta("./data/condefects_meta.jsonl", "./data/date.txt", "./data/condefects_meta_with_date.jsonl")
+    # print(get_all_python_tasks())
 
 #    test_list = get_all_python_tests("abc255_g")
 #    print(test_list)
