@@ -454,6 +454,25 @@ function get_first_change_line_count_number {
     echo $first_change_line_count_number
 }
 
+function get_last_change_line_count_number {
+    work_dir=$3
+    cd "$work_dir"
+
+    IFS='∫'
+
+    # 获取 git show 输出
+    git_show=$(git show --no-prefix -U0)
+
+    # 提取最后一行以 @@ 开头的内容
+    last_change_line=$(echo "$git_show" | grep "^@@" | tail -n 1) # 取最后一行以 @@ 开头的内容
+    last_change_line=${last_change_line//@@/} # 移除 @@
+    last_change_line=$(echo "${last_change_line}" | sed 's/^[ \t]*//') # 移除行首的空格
+    last_change_line=$(echo "${last_change_line}" | cut -d' ' -f1) # 只保留第一个字段（即行号部分）
+    last_change_line=$(echo "${last_change_line}" | sed 's/^[+-]//') # 移除可能存在的 + 或 -
+
+    echo "$last_change_line"
+}
+
 function get_git_show_function_code {
     IFS='∫'
 
