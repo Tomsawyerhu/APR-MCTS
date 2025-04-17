@@ -19,12 +19,16 @@ def METHOD_QUERY(full_qualified_name, simple_name):
 def ClAZZ_QUERY(full_qualified_name):
     """
     找到类节点
-    :param full_qualified_name: 类的完全限定名
+    :param full_qualified_name: 类的完全限定名(可以是list也可以是str)
     :return:
     """
+    assert isinstance(full_qualified_name,str) or isinstance(full_qualified_name,list)
+    search_area = full_qualified_name
+    if isinstance(full_qualified_name,str):
+        search_area=f"'{search_area}'"
     return (
         "MATCH (n:Clazz)\n"
-        f"WHERE n.full_qualified_name = '{full_qualified_name}'\n"
+        f"WHERE n.full_qualified_name {'IN' if isinstance(full_qualified_name,list) else '='} {search_area}\n"
         f"RETURN n"
     )
 
@@ -41,6 +45,18 @@ def METHOD_LIST_QUERY(full_qualified_name):
         "RETURN n"
     )
 
+def FIELD_LIST_QUERY(full_qualified_name):
+    """
+    找到类中定义的类变量列表
+    :param full_qualified_name: 类的完全限定名
+    :return:
+    """
+    return (
+        "MATCH (a:Clazz)-[r:CONTAIN]-(n:Field)\n"
+        f"WHERE a.full_qualified_name = '{full_qualified_name}'\n"
+        "RETURN n"
+    )
+
 
 def IMPORT_QUERY(full_qualified_name):
     """
@@ -49,7 +65,7 @@ def IMPORT_QUERY(full_qualified_name):
     :return:
     """
     return (
-        "MATCH (a:Clazz)-[r:IMPORT]-(n:Clazz)\n"
+        "MATCH (a:Clazz)-[r:IMPORT]->(n:Clazz)\n"
         f"WHERE a.full_qualified_name = '{full_qualified_name}'\n"
         "RETURN n"
     )
@@ -64,7 +80,7 @@ def METHOD2METHOD_INVOKE_QUERY(signature):
     return (
         "MATCH (a:Method)-[r:INVOKE]-(n:Method)\n"
         f"WHERE a.signature = '{signature}'\n"
-        f"and n.signature != '{signature}'\n"
+        f"and n.signature <> '{signature}'\n"
         "RETURN n"
     )
 
@@ -92,6 +108,8 @@ def PARENT_CLASS_QUERY(full_qualified_name):
         f"WHERE a.full_qualified_name = '{full_qualified_name}'\n"
         "RETURN n"
     )
+
+
 
 class Neo4jClient:
     def __init__(self,
