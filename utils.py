@@ -10,10 +10,14 @@ d4j_path = "/mnt/data/hhc/defects4j"
 
 
 def run_bash(function, project, bug_id, extra_arg1=None, extra_arg2=None):
+    # 复制当前环境变量并添加自定义 PATH
+    custom_env = os.environ.copy()
+    custom_env['PATH'] = f'{d4j_path}/framework/bin:' + custom_env['PATH']
+
     work_dir = f"{tmp_dir}/{project}-{bug_id}"
     command = ['bash', f'{shell_script_folder}/{script_name}.sh', function, f"{project}", f"{bug_id}", f"{work_dir}",
                f"{java_home}", f"{d4j_path}", f"{extra_arg1}", f"{extra_arg2}"]
-    result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True,env=custom_env)
     if len(result.stdout) > 0:
         if result.stdout[-1] == "\n":
             result.stdout = result.stdout[:-1]
