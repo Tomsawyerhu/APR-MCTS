@@ -1,8 +1,10 @@
 import os
 import re
 import json
+
+import framework
 from framework import get_bug_details, Bug
-from gpt import generate
+from gpt import generate, generate_patches
 from neo4j_client import *
 from utils import run_bash
 
@@ -181,6 +183,26 @@ def get_method_brief_info(method_node):
     }
 
 
+def extract_patch_from_response(response, mode=None):
+    splitter_count = len(response.split("```java")) - 1
+    if splitter_count > 2:
+        patch = response[response.rfind("```java") + len("```java") + 1:]
+        patch = patch[:patch.find("\n```")]
+    elif splitter_count > 0:
+        patch = response[response.find("```java") + len("```java") + 1:]
+        patch = patch[:patch.find("\n```")]
+    else:
+        patch = response
+    if mode == "SL":
+        while len(patch) > 0 and patch.startswith("\n"):
+            patch = patch[1:]
+        while len(patch) > 0 and patch.endswith("\n"):
+            patch = patch[:-1]
+        if "\n" in patch:
+            patch = patch[:patch.find("\n")]
+    return patch
+
+
 def construct_context_and_save(proj="Chart", bid=5, output_dir="./context"):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -348,17 +370,72 @@ def construct_context_and_save(proj="Chart", bid=5, output_dir="./context"):
     print(f"Context has been written to {output_file}")
 
 
-def repair(proj="Chart", bid=5, context_dir="./context"):
+def repair(proj="Chart", bid=5, context_dir="./context", model="gpt-4o-mini", result_file="./context_repair_result"
+                                                                                          ".jsonl", num_patches=10):
     context_file = f"{context_dir}/context_{proj}_{bid}.json"  # 输出文件名
     if not os.path.exists(context_file):
         construct_context_and_save(proj, bid, context_dir)
     context_dict = dict(json.load(open(context_file, 'r')))
-    context_str = format_context(context_dict,True)
+    context_str = format_context(context_dict, True)
     bug = get_bug_details(proj, bid)
     modes = list(bug.bug_type.split())
     mode = modes[0]
-    prompt = construct_initial_message(bug,mode,context_str)
+    prompt = construct_initial_message(bug, mode, context_str)
+    prompt = [{
+        "role": "user",
+        "content": prompt
+    }]
     print(prompt)
+    responses = generate_patches(prompt, model, num_samples=num_patches)
+    patches = [extract_patch_from_response(response, mode) for response in responses]
+    for i, patch in enumerate(patches):
+        test_result, result_reason, patch_diff = framework.validate_patch(bug=bug, proposed_patch=patch, mode=mode)
+        if test_result == "PASS":
+            print(f"Proposed patch of {bug.project}-{bug.bug_id} ({mode}) patch passed all tests")
+            with open(result_file, "a") as f:
+                record = {
+                    "project": bug.project,
+                    "bug_id": bug.bug_id,
+                    "eval": "PASS",
+                    "attempt": i + 1,
+                    "mode": mode,
+                    "patch": patch,
+                    "diff": patch_diff,
+                }
+                f.write(json.dumps(record) + "\n")
+            return
+        elif result_reason == bug.test_error_message:
+            record = {
+                "project": bug.project,
+                "bug_id": bug.bug_id,
+                "eval": result_reason,
+                "attempt": i + 1,
+                "mode": mode,
+                "patch": patch,
+                "diff": "",
+            }
+            with open(result_file, "a") as f:
+                f.write(json.dumps(record) + "\n")
+            print(
+                f"Proposed patch of {bug.project}-{bug.bug_id} ({mode}) failed with same error message as original bug")
+        else:
+            record = {
+                "project": bug.project,
+                "bug_id": bug.bug_id,
+                "eval": result_reason,
+                "attempt": i + 1,
+                "mode": mode,
+                "patch": patch,
+                "diff": "",
+            }
+            with open(result_file, "a") as f:
+                f.write(json.dumps(record) + "\n")
+            print(
+                f"Proposed patch of {bug.project}-{bug.bug_id} ({mode}) failed with a different error message than original bug")
+
+    with open(result_file, "a") as f:
+        f.write(json.dumps(record) + "\n")
+
 
 if __name__ == '__main__':
     repair()
