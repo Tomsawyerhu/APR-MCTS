@@ -6,7 +6,7 @@ encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
 token_statistics_file="./token_statistics.txt"
 
 
-def make_model(base_url="https://api5.xhub.chat/v1", api_key="sk-LHj3bkbrBiTyPKpsR6SrWi8zCaW5xTlkWMHCDZ2BR96U1iZx"):
+def make_model(base_url="https://api5.xhub.chat/v1", api_key="input your api key here"):
     _client = OpenAI(
         base_url=base_url,
         api_key=api_key,
