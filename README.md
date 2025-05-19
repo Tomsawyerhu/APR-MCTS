@@ -14,69 +14,84 @@ gradle -v
 ```
 + HuggingFace
 ```shell
+pip install -U huggingface_hub
 export HF_ENDPOINT=https://hf-mirror.com
-huggingface-cli download --token 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 --resume-download TechxGenus/starcoder2-3b-instruct --local-dir /root/autodl-tmp/starcoder2-3b-instruct
+huggingface-cli download --token $HF_TOKEN --resume-download $MODEL_NAME --local-dir $LOCAL_DIR
 ```
 
-## QuixBugs-Java Result
++ Defects4j
+```shell
+git clone https://github.com/rjust/defects4j
+cd defects4j
+cpanm --installdeps .
+./init.sh
+export PATH=$PATH:"path2defects4j"/framework/bin
+```
 
-#### API
-
-| Model       | SL (Single Line) | SF (Single Function) | ALL          | 
-|-------------|------------------|----------------------|--------------|
-| GPT-4o-mini | 87.5 (28/32)     | 87.5 (7/8)           | 87.5 (35/40) | 
-| GPT-4o      | 96.87 (31/32)    | 87.5 (7/8)           | 95 (38/40)   | 
-
-
-#### 3B
-
-| Model                               | SL (Single Line) | SF (Single Function) | ALL          | 
-|-------------------------------------|------------------|----------------------|--------------|
-| meta-llama/Llama-3.2-3B-Instruct    | 46.87 (15/32)    | 62.5 (5/8)           | 52.5 (21/40) |
-| Qwen/Qwen2.5-Coder-3B-Instruct      | 68.75 (22/32)    | 62.5 (5/8)           | 67.5 (27/40) |
-| stabilityai/stable-code-instruct-3b | 62.5 (20/32)     | 0 (0/8)              | 50 (20/40)   |
-| MaziyarPanahi/calme-3.1-instruct-3b | 43.75 (14/32)    | 62.5 (5/8)           | 47.5 (19/40) |
-| TechxGenus/starcoder2-3b-instruct   | 56.25 (18/32)    | 0 (0/8)              | 45 (18/40)   |
-
-#### 7B
-| Model                                    | SL (Single Line) | SF (Single Function) | ALL          | 
-|------------------------------------------|------------------|----------------------|--------------|
-| deepseek-ai/deepseek-coder-6.7b-instruct | 65.62 (21/32)    | 75 (6/8)             | 67.5 (27/40) | 
-| Qwen/Qwen2.5-Coder-7B-Instruct           | 59.37 (19/32)    | 75 (6/8)             | 62.5 (25/40) |
-| 01-ai/Yi-Coder-9B-Chat                   | 75 (24/32)       | 87.5 (7/8)           | 77.5 (31/40) |
-| meta-llama/Llama-3.1-8B-Instruct         | 62.5 (20/32)     | 62.5 (5/8)           | 62.5 (25/40) |
-| Deci/DeciLM-7B-instruct                  | 53.12 (17/32)    | 25 (2/8)             | 47.5 (19/40) |
-| tiiuae/falcon-7b-instruct                | 12.5 (4/32)      | 0 (0/8)              | 10 (4/40)    |
-| microsoft/Phi-3.5-mini-instruct          | 46.87 (15/32)    | 50 (4/8)             | 47.5 (19/40) |
++ ConDefects
+  + [paper](https://arxiv.org/abs/2310.16253)
+  + [code](https://github.com/appmlk/ConDefects)
+  + git clone & replace the original files with ConDefects_Replace to support multi-threaded testing.
 
 
-## D4J Result
++ other artifacts needed to install
+  + less 
+  + expect 
+  + svn
 
-#### API
+## Run
 
-| Model       | SL (Single Line) | SH (Single Hunk) | SF (Single Function) | ALL             | 
-|-------------|------------------|------------------|----------------------|-----------------|
-| GPT-4o-mini | 43.37 (72/166)   | 34.21 (39/114)   | 32.36 (67/207)       | 36.55 (178/487) | 
-| GPT-4o      | (/166)           | (/114)           | (/207)               | (/487)          |
++ Defects4J
+```shell
 
-#### 3B
+python mcts.py \
+    --policy_model gpt-4o-mini \
+    --max_rollout 16 \
+    --max_expansion 3 \
+    --branch 1 \
+    --exploration_constant 0.7 \
+    --logger logs/mcts.log \
+    --output_file results/result.jsonl
 
-| Model                               | SL (Single Line) | SH (Single Hunk) | SF (Single Function) | ALL    | 
-|-------------------------------------|------------------|------------------|----------------------|--------|
-| Qwen/Qwen2.5-Coder-3B-Instruct      | (/166)           | (/114)           | (/207)               | (/487) |
-| meta-llama/Llama-3.2-3B-Instruct    | (/166)           | (/114)           | (/207)               | (/487) |
-| stabilityai/stable-code-instruct-3b | (/166)           | (/114)           | (/207)               | (/487) |
-| MaziyarPanahi/calme-3.1-instruct-3b | (/166)           | (/114)           | (/207)               | (/487) |
-| TechxGenus/starcoder2-3b-instruct   | (/166)           | (/114)           | (/207)               | (/487) |
+```
 
-#### 7B
++ QuixBugs
 
-| Model                                    | SL (Single Line) | SH (Single Hunk) | SF (Single Function) | ALL             | 
-|------------------------------------------|------------------|------------------|----------------------|-----------------|
-| deepseek-ai/deepseek-coder-6.7b-instruct | 48.19 (80/166)   | 15.78 (18/114)   | 20.77 (43/207)       | 28.95 (141/487) | 
-| Qwen/Qwen2.5-Coder-7B-Instruct           | 39.15 (65/166)   | 15.78 (18/114)   | 25.60 (53/207)       | 27.92 (136/487) | 
-| 01-ai/Yi-Coder-9B-Chat                   | 48.79 (81/166)   | 28.07 (32/114)   | 31.40 (65/207)       | 36.55 (178/487) |
-| meta-llama/Llama-3.1-8B-Instruct         | 42.77 (71/166)   | 21.05 (24/114)   | 28.98 (60/207)       | 31.82 (155/487) | 
-| Deci/DeciLM-7B-instruct                  | 30.72 (51/166)   | 7.89 (9/114)     | 11.11 (23/207)       | 17.04 (83/487)  |
-| tiiuae/falcon-7b-instruct                | 20.48 (34/166)   | 8.77 (10/114)    | 0.96 (2/207)         | 9.44 (46/487)   |
-| microsoft/Phi-3.5-mini-instruct          | (/166)           | (/114)           | (/207)               | (/487)          |
+```shell
+Python quixbugs_repair.py
+```
+
++ ConDefects
+
+```shell
+python condefects_mcts.py \
+    --policy_model gpt-4o-mini \
+    --max_rollout 32 \
+    --max_expansion 3 \
+    --branch 10 \
+    --exploration_constant 0.7 \
+    --program_id xxx \
+    --task_id xxx\
+    --mask_mode unmasked \
+    --logger logs/mcts.log \
+    --output_file results/condefects_result.jsonl
+```
+
+## Results
+
+| Method                                                   | Model         | Patch Size | Defects4J-v1.2 | Defects4J-v2 | Total   | QuixBugs |
+|----------------------------------------------------------|---------------|------------|----------------|--------------|---------|----------|
+| [SelfAPR](https://arxiv.org/abs/2203.12755)              | T5            | 150        | 65/74          | 45/47        | 110/121 | -        |
+| [CURE](https://arxiv.org/abs/2103.00073)                 | GPT-2         | 5000       | 57/-           | 19/-         | 76/-    | 26       |
+| [RAPGen](https://arxiv.org/abs/2309.06057)               | CodeT5        | -          | 72/-           | 53/-         | 125/-   | -        |
+| [RewardRepair](https://arxiv.org/abs/2105.04123)         | Transformer   | 200        | 45/-           | 45/-         | 90/-    | 20       |
+| [Recoder](https://arxiv.org/abs/2106.08253)              | TreeGen       | 100        | 53/-           | 19/-         | 72/-    | 31       |
+| [Repatt](https://ieeexplore.ieee.org/document/10457332/) | -             | 1200       | 40/70          | 35/68        | 75/138  | -        |
+| [GAMMA](https://arxiv.org/abs/2309.09308)                | ChatGPT       | 250        | 82/108         | 45/-         | 127/-   | 22       |
+| Incoder                                                  | Incoder       | -          | 78/-           | 39/-         | 117/-   | 37       |
+| [ChatRepair](https://arxiv.org/abs/2304.00385)           | ChatGPT       | 500        | 114/-          | 48/-         | 162/-   | 40       |
+| [RepairAgent](https://arxiv.org/abs/2403.17134)          | GPT-3.5-0125  | 117        | 92/96          | 72/90        | 164/186 | -        |
+| **APRMCTS (GPT-4o-mini)**                                | GPT-4o-mini   | 16         | 80/108         | 78/100       | 158/208 | 40       |
+| **APRMCTS (GPT-3.5-turbo, 16 patch)**                    | GPT-3.5-turbo | 16         | 86/112         | 73/104       | 159/216 | 40       |
+| **APRMCTS (GPT-3.5-turbo, 32 patch)**                    | GPT-3.5-turbo | 32         | 108/146        | 93/134       | 201/280 | 40       |
+
