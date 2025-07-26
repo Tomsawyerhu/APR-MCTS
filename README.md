@@ -1,3 +1,7 @@
+## Important
++ 🚀 Appendix is at ./appendix/APRMCTS-appendix.pdf
++ 🚀 Raw results is under ./data
+
 ## Requirements
 + Gradle: 8.11.1
 ```shell
