@@ -94,8 +94,9 @@ python condefects_mcts.py \
 | [GAMMA](https://arxiv.org/abs/2309.09308)                | ChatGPT       | 250        | 82/108         | 45/-         | 127/-   | 22       |
 | Incoder                                                  | Incoder       | -          | 78/-           | 39/-         | 117/-   | 37       |
 | [ChatRepair](https://arxiv.org/abs/2304.00385)           | ChatGPT       | 500        | 114/-          | 48/-         | 162/-   | 40       |
-| [RepairAgent](https://arxiv.org/abs/2403.17134)          | GPT-3.5-0125  | 117        | 92/96          | 72/90        | 164/186 | -        |
+| [RepairAgent](https://arxiv.org/abs/2403.17134)          | GPT-3.5  | 117        | 92/96          | 72/90        | 164/186 | -        |
 | **APRMCTS (GPT-4o-mini)**                                | GPT-4o-mini   | 16         | 80/108         | 78/100       | 158/208 | 40       |
-| **APRMCTS (GPT-3.5-turbo, 16 patch)**                    | GPT-3.5-turbo | 16         | 86/112         | 73/104       | 159/216 | 40       |
-| **APRMCTS (GPT-3.5-turbo, 32 patch)**                    | GPT-3.5-turbo | 32         | 108/146        | 93/134       | 201/280 | 40       |
+| **APRMCTS (GPT-3.5, 16 patch)**                    | GPT-3.5 | 16         | 86/112         | 73/104       | 159/216 | 40       |
+| **APRMCTS (GPT-3.5, 32 patch)**                    | GPT-3.5 | 32         | 108/146        | 93/134       | 201/280 | 40       |
+| **APRMCTS (GPT-3.5, 500 patch)**                    | GPT-3.5 | 500         | 112/153        | 100/143       | 212/296 | 40       |
 
