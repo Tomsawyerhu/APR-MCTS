@@ -8,13 +8,13 @@ def construct_initial_message(bug: Bug, mode: str, language="java"):
         prompt_header = f"""The following code contains a buggy line that has been removed.\n```{language}\n{bug.masked_code}\n```
 This was the original buggy line which was removed by the infill location:
 ```{language}\n{bug.buggy_lines}\n```\nTest cases look like:```{language}\n{bug.extract_test_code}```\nThe code fails with the following test error:\n```\n{bug.failing_tests}\n```"""
-        prompt_footer = f"After giving reflection, please provide the correct line at the infill location, only single line is allowed. Pay attention to indentation. your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
+        prompt_footer = f"After giving reflection, please provide the correct line at the infill location, only single line is allowed. your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
 
     elif mode == "SH":
         prompt_header = f"""The following code contains a buggy hunk that has been removed.\n```{language}\n{bug.masked_code}\n```
 This was the original buggy hunk which was removed by the infill location:
 ```{language}\n{bug.buggy_lines}\n```\nTest cases look like:```{language}\n{bug.extract_test_code}```\nThe code fails with the following test error:\n```\n{bug.failing_tests}\n```"""
-        prompt_footer = f"After giving reflection, please provide the correct hunk at the infill location, only single hunk is allowed. Pay attention to indentation. Your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
+        prompt_footer = f"After giving reflection, please provide the correct hunk at the infill location, only single hunk is allowed. your answer must be different from ```{language}\n{bug.buggy_lines}\n``` , your answer should begin with ```{language}"
 
 
     elif mode == "SF":
@@ -32,7 +32,7 @@ def construct_gpt_policy_prompt(bug: Bug, mode: str,language="java"):
     initial_prompt_message = construct_initial_message(bug=bug, mode=mode,language=language)
 
     return [{"role": "system",
-             "content": "You are an automated program repair tool. Please do not use language features beyond {language} 1.4, such as foreach and generics <>."},
+             "content": f"You are an automated program repair tool. Please do not use language features beyond {language} 1.4, such as foreach and generics <>."},
             {"role": "user", "content": initial_prompt_message}]
 
 
@@ -40,7 +40,7 @@ def construct_llm_policy_prompt(bug: Bug, mode: str, tokenizer,language="java"):
     initial_prompt_message = construct_initial_message(bug=bug, mode=mode,language=language)
     template = [
         {"role": "system",
-         "content": "You are an automated program repair tool. Please do not use language features beyond {language} 1.4, such as foreach and generics <>."},
+         "content": f"You are an automated program repair tool."},
         {"role": "user", "content": initial_prompt_message},
     ]
     return tokenizer.apply_chat_template(template, tokenize=False, add_generation_prompt=True)

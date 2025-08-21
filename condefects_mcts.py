@@ -8,11 +8,11 @@ import random
 from framework import Bug
 import prompt_mcts as prompt
 from condefects import *
-# from llm import generate as generate_llm, generate_patches as generate_patches_llm
+from llm import generate as generate_llm, generate_patches as generate_patches_llm
 from gpt import generate as generate_gpt, generate_patches as generate_patches_gpt
 import sys
 
-accepted_policy_models = ["gpt-4o-mini", "gpt-4o", "qwen-3b", "yi-9b", "llama-3b", "llama-8b"]
+accepted_policy_models = ["gpt-4o-mini", "gpt-4o", "qwen-3b", "yi-9b", "llama-3b", "llama-8b","qwen2.5-coder-32b-instruct"]
 model_paths = {
     "qwen-3b": "/root/autodl-tmp/Qwen2.5-Coder-3B-Instruct",
     "yi-9b": "/root/autodl-tmp/Yi-Coder-9B-Chat",
@@ -32,7 +32,7 @@ tokenizer = None
 reward_model = None
 existed_patches = {}
 search_until_maxrollout = False
-branch = 10
+branch = 4
 alpha = 0.8
 
 mask_mode = False
@@ -131,15 +131,15 @@ def expand(node: Node):
         repair_prompt = prompt.construct_gpt_policy_prompt(bug=bug, mode=mode, language="python")
         print(repair_prompt[1]["content"] + "\n")
     else:
-        repair_prompt = prompt.construct_llm_policy_prompt(bug=bug, mode=mode, tokenizer=tokenizer)
+        repair_prompt = prompt.construct_llm_policy_prompt(bug=bug, mode=mode, tokenizer=tokenizer,language="python")
         print(repair_prompt + "\n")
 
     # we can expand several children at one time
     if isinstance(policy_model, str):
-        responses = generate_patches_gpt(prompt=repair_prompt, num_samples=branch)
+        responses = generate_patches_gpt(prompt=repair_prompt, num_samples=branch,model_name=policy_model)
     else:
-        # responses = generate_patches_llm(policy_model, repair_prompt, num_samples=branch)
-        pass
+        responses = generate_patches_llm(policy_model, repair_prompt, num_samples=branch)
+#        pass
     existed = []
     for response in responses:
         if node.is_fully_expanded():
@@ -299,8 +299,8 @@ def mask_fill(code, line_num):
     return '\n'.join(all_lines)
 
 
-def format_test_failure_info(test_input, test_output, expected_output, is_passed_result, limit=100000,
-                             input_output_limit=1000):
+def format_test_failure_info(test_input, test_output, expected_output, is_passed_result, limit=5000,
+                             input_output_limit=200):
     """
 
     :param test_input:
@@ -404,7 +404,7 @@ def mcts_repair():
                     continue
                 bug.test_output = test_result[line['program_id']]['test_results']
                 bug.expected_output = test_result[line['program_id']]['correct_results']
-                print(test_result)
+#                print(test_result)
                 is_passed_result = line['test_result']
                 bug.failing_tests = format_test_failure_info(bug.test_input, bug.test_output, bug.expected_output,
                                                              is_passed_result)

@@ -142,7 +142,7 @@ var = ['abc221_f', 'abc221_g', 'abc221_h', 'abc222_g', 'abc223_a', 'abc223_b', '
        'arc176_d', 'arc177_a', 'arc177_b', 'arc177_d', 'arc178_b', 'arc178_c', 'arc178_d', 'arc179_a', 'arc179_b',
        'arc179_d', 'arc180_a', 'arc180_b', 'arc180_c']
 
-var2=os.listdir("/Users/tom/Downloads/ConDefects-4b05fb96a46baacf48be160621121412c795b1de/Code")
+var2 = os.listdir("/Users/tom/Downloads/ConDefects-4b05fb96a46baacf48be160621121412c795b1de/Code")
 
 #read task date
 task_date = {}
@@ -153,15 +153,38 @@ with open("./data/date.txt", 'r') as f:
         items = line.strip().split()
         task_date[items[0]] = items[1]
 
-result=[]
+result = []
 for name in var:
     if is_date_in_range(task_date[name]) and name in var2:
         result.append(name)
+
+match_gt_gpt = [('abc287_a', '45997875'), ('abc297_a', '45500749'), ('abc307_b', '45786032'), ('abc229_a', '44996770'),
+            ('abc356_a', '54989904'), ('abc297_a', '45496094'), ('abc324_b', '54903435'), ('abc283_a', '44656811'),
+            ('abc325_a', '54471524'), ('abc358_a', '55126932'), ('abc319_a', '46004667'), ('abc282_a', '45264195'),
+            ('abc307_c', '46162555'), ('abc325_a', '54458696'), ('abc303_d', '45744343'), ('abc249_a', '45229228'),
+            ('abc282_a', '44657009'), ('abc308_a', '46023709'), ('abc286_e', '46169747'), ('abc321_a', '54713012'),
+            ('abc334_a', '54632654'), ('abc327_a', '54966208'), ('abc324_a', '54455002'), ('abc234_c', '46127385'),
+            ('abc309_a', '45740476'), ('abc255_c', '44681612'), ('abc236_a', '45439657'), ('abc358_a', '55029700'),
+            ('abc320_b', '54935207'), ('arc144_a', '41487232'), ('agc061_a', '38852158'), ('abc275_a', '45305644'),
+            ('abc336_a', '54729953'), ('arc132_a', '45439715'), ('abc358_a', '55146983'), ('abc324_b', '54985902'),
+            ('abc292_b', '45575109'), ('abc282_a', '45920464'), ('abc274_a', '46127383'), ('abc237_a', '45710805'),
+            ('abc229_a', '46216070'), ('abc347_b', '54617710'), ('abc224_a', '46029165'), ('abc245_a', '45115746'),
+            ('abc314_a', '45968783'), ('abc281_a', '45244769'), ('abc341_a', '54737422'), ('abc290_b', '46158106'),
+            ('abc276_a', '45957302'), ('abc345_b', '54913953'), ('abc283_a', '44652899'), ('abc318_a', '45773988'),
+            ('abc322_a', '46206505'), ('abc318_a', '45803682'), ('abc315_a', '46129092'), ('abc340_b', '54695651'),
+            ('abc309_a', '45775765'), ('abc281_a', '45998040'), ('abc348_a', '54751581'), ('abc283_a', '44590701'),
+            ('abc312_a', '46206002'), ('abc358_a', '55148090'), ('abc225_a', '44983533'), ('abc302_a', '45902614'),
+            ('abc352_a', '54737577'), ('abc318_a', '45733281'), ('abc359_b', '55042277'), ('abc324_b', '54981446'),
+            ('abc241_a', '46045206'), ('abc314_a', '46017209'), ('abc291_a', '45508180'), ('abc230_a', '45743291'),
+            ('abc348_a', '54752579'), ('abc266_d', '44445026'), ('abc304_a', '45720608'), ('abc261_a', '44843749')]
+
+match_gt_qwen=[('arc144_a', '41487232'), ('abc235_e', '45321024'), ('abc250_b', '45692958'), ('abc225_a', '44428733'), ('abc292_b', '45695205'), ('abc263_a', '45972944'), ('abc266_b', '44372589'), ('abc312_a', '45765051'), ('abc259_a', '46054994'), ('abc267_a', '45943869'), ('abc229_b', '44815699'), ('abc282_a', '45920464'), ('abc302_a', '45902614'), ('abc309_a', '45740476'), ('abc294_b', '46049020'), ('abc299_c', '45334014'), ('abc312_a', '45974761'), ('abc314_a', '46017209'), ('abc283_a', '44590701'), ('abc283_a', '44656811'), ('abc281_a', '45998040'), ('abc319_a', '46004667'), ('abc318_a', '45803682'), ('abc261_b', '45054015'), ('arc132_c', '35435888'), ('abc315_a', '46129092'), ('abc314_a', '45968783'), ('abc291_a', '45508180'), ('abc313_a', '45811912'), ('abc272_e', '45511246'), ('abc261_b', '46179770'), ('abc248_d', '45297242'), ('abc303_d', '45744343'), ('abc256_d', '44916698'), ('abc282_a', '45264195'), ('abc292_b', '44986856'), ('abc258_b', '44828873'), ('abc237_c', '45766174'), ('abc269_a', '45960449'), ('abc319_a', '45995183'), ('abc305_a', '45542217'), ('abc308_a', '45947529'), ('abc287_a', '45997875'), ('abc224_a', '45979243'), ('abc261_a', '44843749'), ('abc281_a', '45244769'), ('abc224_a', '46029165'), ('abc229_a', '46216070'), ('abc277_a', '45949578'), ('abc253_a', '45454292'), ('abc312_a', '46206002'), ('abc238_a', '45663153'), ('abc309_a', '46161633'), ('abc230_a', '44349986'), ('arc137_c', '33252696'), ('abc312_a', '45975022'), ('abc224_a', '45476747'), ('abc230_a', '45743291'), ('abc295_a', '46045977'), ('abc309_a', '45775765'), ('abc269_a', '45960382'), ('abc225_a', '44983533'), ('abc224_b', '45096470'), ('abc249_a', '45778141'), ('abc237_a', '45710805'), ('abc265_a', '45840285'), ('abc273_b', '45948106'), ('abc252_a', '45686937'), ('abc297_a', '45496094'), ('abc239_c', '46171405'), ('abc249_a', '45229228'), ('abc283_a', '44652899'), ('abc313_b', '45889938'), ('abc311_a', '45791225')]
+
 def main1():
-    print("2021-10-01~2023-09-30,","2023-09-30~,","2021-10-01~2023-09-30 old")
+    print("2021-10-01~2023-09-30,", "2023-09-30~,", "2021-10-01~2023-09-30 old")
     meta_info = {}
     date_info = {}
-    meta_info_old=[]
+    meta_info_old = []
     with jsonlines.open("./data/condefects_meta_with_date.jsonl", 'r') as reader:
         for line in reader:
             a = meta_info.get(line["task_id"], [])
@@ -173,21 +196,28 @@ def main1():
     with jsonlines.open("./data/condefects_meta_old_with_date.jsonl", 'w') as writter:
         writter.write_all(meta_info_old)
     # print([x for x in meta_info.keys() if is_date_in_range(date_info[x])])
-    print("元信息",len([x for x in meta_info.keys() if is_date_in_range(date_info[x])]),len([x for x in meta_info.keys() if not is_date_in_range(date_info[x])]),len([x for x in meta_info.keys() if is_date_in_range(date_info[x]) and x in result]))
+    print("元信息", len([x for x in meta_info.keys() if is_date_in_range(date_info[x])]),
+          len([x for x in meta_info.keys() if not is_date_in_range(date_info[x])]),
+          len([x for x in meta_info.keys() if is_date_in_range(date_info[x]) and x in result]))
     print([x for x in meta_info.keys() if is_date_in_range(date_info[x]) and x in result])
     pass_result, fail_result = [], []
     tasks = set()
-    with jsonlines.open("./data/condefects_mcts_result.jsonl", 'r') as reader:
+    with jsonlines.open("./data/condefects_mcts_result_qwen32b.jsonl", 'r') as reader:
         for line in reader:
             tasks.add(line['project'])
             if line["eval"] == "PASS":
                 pass_result.append((line['project'], line['bug_id']))
             else:
                 fail_result.append((line['project'], line['bug_id']))
-    print("运行的",len([x for x in tasks if is_date_in_range(date_info[x])]),len([x for x in tasks if not is_date_in_range(date_info[x])]),len([x for x in tasks if is_date_in_range(date_info[x]) and x in result]))
+    print("运行的", len([x for x in tasks if is_date_in_range(date_info[x])]),
+          len([x for x in tasks if not is_date_in_range(date_info[x])]),
+          len([x for x in tasks if is_date_in_range(date_info[x]) and x in result]))
     pass_num = 0
     pass_num_new = 0
+    pass_num_new_match_gt = 0
     pass_num_old = 0
+    pass_num_old_match_gt = 0
+    pass_old = []
     for p in meta_info.keys():
         # check date
 
@@ -197,24 +227,60 @@ def main1():
                 is_pass = False
                 break
         if is_pass:
+            for q in meta_info[p]:
+                if (p, q) in match_gt_qwen:
+                    if not is_date_in_range(date_info[p]):
+                        pass_num_new_match_gt += 1
+                    else:
+                        pass_num_old_match_gt += 1
+                    break
+        if is_pass:
             if not is_date_in_range(date_info[p]):
                 pass_num_new += 1
             else:
                 pass_num += 1
             if p in result:
-                pass_num_old+=1
-    print("修复的",pass_num, pass_num_new,pass_num_old)
+                pass_num_old += 1
+                pass_old.append(p)
+
+    print("修复的", pass_num, f'{pass_num_new}({pass_num_new_match_gt})', f'{pass_num_old}({pass_num_old_match_gt})')
+    print(pass_old)
     # print([x for x in meta_info.keys() if len(meta_info[x])==1])
 
+
 def main2():
-    with jsonlines.open("./data/condefects_mcts_result.jsonl", 'r') as reader,jsonlines.open("./data/condefects_mcts_result2.jsonl", 'w') as writer:
+    with jsonlines.open("./data/condefects_mcts_result.jsonl", 'r') as reader, jsonlines.open(
+            "./data/condefects_mcts_result2.jsonl", 'w') as writer:
         for line in reader:
-            if line["eval"]=="PASS":
+            if line["eval"] == "PASS":
                 writer.write(line)
 
+
+def main3():
+    file = '/Users/tom/Downloads/results.jsonl'
+    passed = set()
+    total = set()
+    with jsonlines.open(file, 'r') as f:
+        for line in f:
+            total.add(line['project'] + "_" + line['bug_id'])
+            if line['eval'] == "PASS":
+                passed.add(line['project'] + "_" + line['bug_id'])
+    print(len(passed), len(total))
+    print(total)
+
+
+def main4():
+    match_groundtruth = set()
+    #计算和标准答案一样的
+    with jsonlines.open("./data/condefects_mcts_result_qwen32b.jsonl", 'r') as reader:
+        for line in reader:
+            groundtruth_file = f'/Users/tom/Downloads/ConDefects-main/Code/{line["project"]}/Python/{line["bug_id"]}/correctVersion.py'
+            groundtruth_code = open(groundtruth_file, 'r').read()
+            if line['patch'].replace(' ', '').replace('\n', '') == groundtruth_code.replace(' ', '').replace('\n', ''):
+                match_groundtruth.add((line['project'], line['bug_id']))
+    print(list(match_groundtruth))
+
+
 main1()
-
-
-
 #
 # print(len(result))

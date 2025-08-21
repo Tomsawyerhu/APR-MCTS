@@ -1,7 +1,3 @@
-## Important
-+ 🚀 Appendix is at ./appendix/APRMCTS-appendix.pdf
-+ 🚀 Raw results is under ./data
-
 ## Requirements
 + Gradle: 8.11.1
 ```shell
@@ -45,7 +41,7 @@ export PATH=$PATH:"path2defects4j"/framework/bin
 
 ## Run
 
-+ Defects4J
++ Defects4J (APRMCTS)
 ```shell
 
 python mcts.py \
@@ -57,6 +53,19 @@ python mcts.py \
     --logger logs/mcts.log \
     --output_file results/result.jsonl
 
+```
+
++ Defects4J (Beam Search + Patch Pool)
+```shell
+python beam_search.py \
+    --policy_model qwen2.5-coder-32b \
+    --reward_model qwen2.5-coder-32b \
+    --output_path ./data/beam_search_results.jsonl \
+    --plausible_save_path ./plausible \
+    --beam_width 5 \
+    --max_tokens 16000 \
+    --max_iter 4 \
+    --pool_size 4 \
 ```
 
 + QuixBugs
@@ -79,6 +88,14 @@ python condefects_mcts.py \
     --mask_mode unmasked \
     --logger logs/mcts.log \
     --output_file results/condefects_result.jsonl
+```
+
++ SWE-bench lite
+```shell
+# prepare data
+python swe_utils.py
+# run swe
+python swe_mcts.py
 ```
 
 ## Results

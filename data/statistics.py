@@ -3,18 +3,21 @@ These codes are from https://github.com/tctianchi/pyvenn/blob/master/venn.py
 
 """
 import json
+import os
 # coding: utf-8
 from itertools import chain
+
+from get_d4j_bug_list import get_history_defects4j_project_and_bug
 
 try:
     # since python 3.10
     from collections.abc import Iterable
 except ImportError:
     from collections import Iterable
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-from matplotlib import colors
-import math
+# import matplotlib.pyplot as plt
+# import matplotlib.patches as patches
+# from matplotlib import colors
+# import math
 
 
 def read_manual_d4j12(file="./manual_mcts_gpt_3.5_turbo_32patch.txt"):
@@ -30,6 +33,8 @@ def read_manual_d4j12(file="./manual_mcts_gpt_3.5_turbo_32patch.txt"):
                 continue
             if line.split(",")[0].split("_")[0] not in projects:
                 continue
+            if line.split(",")[0] in sets:
+                print(line.split(",")[0])
             sets.add(line.split(",")[0])
     return sets
 
@@ -47,6 +52,8 @@ def read_manual_d4j2(file="./manual_mcts_gpt_3.5_turbo_32patch.txt"):
                 continue
             if line.split(",")[0].split("_")[0] in projects:
                 continue
+            if line.split(",")[0] in sets:
+                print(line.split(",")[0])
             sets.add(line.split(",")[0])
     return sets
 
@@ -238,7 +245,7 @@ def venn3(labels, names=['A', 'B', 'C'], **options):
     colors = options.get('colors', [default_colors[i] for i in range(3)])
     figsize = options.get('figsize', (9, 9))
     dpi = options.get('dpi', 96)
-    fontsize = options.get('fontsize', 14)
+    fontsize = options.get('fontsize', 25)
 
     fig = plt.figure(0, figsize=figsize, dpi=dpi)
     ax = fig.add_subplot(111, aspect='equal')
@@ -262,8 +269,9 @@ def venn3(labels, names=['A', 'B', 'C'], **options):
     draw_text(fig, ax, 0.15, 0.87, names[0], colors[0], fontsize=fontsize, ha="right", va="bottom")
     draw_text(fig, ax, 0.85, 0.87, names[1], colors[1], fontsize=fontsize, ha="left", va="bottom")
     draw_text(fig, ax, 0.50, 0.02, names[2], colors[2], fontsize=fontsize, va="top")
-    leg = ax.legend(names, loc='center left', bbox_to_anchor=(1.0, 0.5), fancybox=True)
-    leg.get_frame().set_alpha(0.5)
+    # leg = ax.legend(names, loc='center left', bbox_to_anchor=(1.0, 0.5), fancybox=True)
+    # leg.get_frame().set_alpha(0.5)
+    plt.savefig(options.get("output", "./pdf/venn3.pdf"), bbox_inches='tight')
 
     return fig, ax
 
@@ -406,7 +414,7 @@ def venn5(labels, names=['A', 'B', 'C', 'D', 'E'], **options):
     draw_text(fig, ax, 0.12, 0.05, names[4], colors[4], fontsize=fontsize, ha="right")
     # leg = ax.legend(names, loc='center left', bbox_to_anchor=(1.0, 0.5), fancybox=True)
     # leg.get_frame().set_alpha(0.5)
-    plt.savefig(options.get("output", "./pdf/venn5.pdf"),bbox_inches='tight')
+    plt.savefig(options.get("output", "./pdf/venn5.pdf"), bbox_inches='tight')
 
     return fig, ax
 
@@ -612,9 +620,87 @@ def read_pass_result_from_manual_file(file_path):
     return result
 
 
+defects4j_history_bugs = get_history_defects4j_project_and_bug("/Users/tom/Downloads/defects4j-1.2.0")
+
+
+def read_chatrepair_bugfix(file="./chatrepair/patch_all.txt"):
+    result = []
+    with open(file, 'r') as f:
+        for line in f.readlines():
+            if line.strip() == "":
+                continue
+            result.append(line.strip().replace("-", "_"))
+    return result
+
+
+def read_chatrepair_bugfix_d4j12_and_d4j2(file="./chatrepair/patch_all.txt"):
+    result = read_chatrepair_bugfix(file)
+    result1, result2 = [], []
+    for t in result:
+        proj, bug_id = t.split("_")[0], t.split("_")[1]
+        if bug_id in defects4j_history_bugs.get(proj, []):
+            result1.append(t)
+        else:
+            result2.append(t)
+    return result1, result2
+
+
+def read_iter_bugfix_d4j12_and_d4j2(iter_dir='/Users/tom/Downloads/ITER-master'):
+    correct_patch_dir = f'{iter_dir}/patches/correct'
+    plausible_patch_dir = f'{iter_dir}/patches/plausible'
+    correct_patches = os.listdir(correct_patch_dir)
+    plausible_patches = os.listdir(plausible_patch_dir)
+    correct_d4j12, correct_d4j2 = [], []
+    plausible_d4j12, plausible_d4j2 = [], []
+
+    d4j12_bugs = []
+    for k in defects4j_history_bugs:
+        for bid in defects4j_history_bugs[k]:
+            d4j12_bugs.append(k + str(bid))
+    for correct_patch in correct_patches:
+        if correct_patch in d4j12_bugs:
+            correct_d4j12.append(correct_patch)
+        else:
+            correct_d4j2.append(correct_patch)
+    for plausible_patch in plausible_patches:
+        if plausible_patch in d4j12_bugs:
+            plausible_d4j12.append(plausible_patch)
+        else:
+            plausible_d4j2.append(plausible_patch)
+
+    print(len(correct_d4j12), len(correct_d4j2), len(plausible_d4j12), len(plausible_d4j2))
+
+
+def read_repairagent_bugfix(file="./repairagent/patch_list.txt"):
+    result = []
+    with open(file, 'r') as f:
+        for line in f.readlines():
+            if line.strip() == "":
+                continue
+            result.append(line.strip().replace(" ", "_"))
+    return result
+
+
+def read_repairagent_bugfix_d4j12_and_d4j2(file="./repairagent/patch_list.txt"):
+    result = read_repairagent_bugfix(file)
+    result1, result2 = [], []
+    for t in result:
+        proj, bug_id = t.split("_")[0], t.split("_")[1]
+        if bug_id in defects4j_history_bugs.get(proj, []):
+            result1.append(t)
+        else:
+            result2.append(t)
+    return result1, result2
+
+
 ##%%
+repairagent_all = read_repairagent_bugfix()
+repairagent_d4j12, repairagent_d4j2 = read_repairagent_bugfix_d4j12_and_d4j2()
+chatrepair_all = read_chatrepair_bugfix()
+chatrepair_d4j12, chatrepair_d4j2 = read_chatrepair_bugfix_d4j12_and_d4j2()
 mcts_defects4j12 = read_manual_d4j12()
 mcts_defects4j2 = read_manual_d4j2()
+mcts_all = mcts_defects4j12.union(mcts_defects4j2)
 cure_defects4j12 = ['Chart_11', 'Closure_62', 'Lang_59', 'Chart_12', 'Lang_6', 'Closure_126', 'Chart_17', 'Closure_70',
                     'Chart_14', 'Chart_1', 'Closure_73', 'Mockito_5', 'Math_98', 'Time_19', 'Math_58', 'Lang_38',
                     'Lang_10', 'Math_70', 'Mockito_29', 'Math_65', 'Math_59', 'Math_75', 'Lang_29', 'Mockito_38',
@@ -678,29 +764,45 @@ selfapr_defects4j2 = ['Compress_31', 'Cli_8', 'JacksonDatabind_27', 'Jsoup_17', 
                       'JacksonDatabind_16', 'JacksonDatabind_46', 'Codec_8', 'JacksonCore_25', 'Compress_27',
                       'Jsoup_45', 'Jsoup_62', 'JacksonDatabind_57', 'Compress_19', 'Cli_17', 'JacksonDatabind_102',
                       'Gson_6', 'Compress_23', 'Codec_17', 'Codec_16']
-intersections = calculate_intersections([
-    set(mcts_defects4j12), set(rapgen_defects4j12), set(rewardrepair_defects4j12), set(selfapr_defects4j12),
-    set(cure_defects4j12)
-])
-intersections = {k: len(v) for k, v in intersections.items()}
-intersections2 = calculate_intersections([
-    set(mcts_defects4j2), set(rapgen_defects4j2), set(rewardrepair_defects4j2), set(selfapr_defects4j2),
-    set(cure_defects4j2)
-])
-intersections2 = {k: len(v) for k, v in intersections2.items()}
-intersections3 = calculate_intersections([
-    set(rapgen_defects4j12), set(rewardrepair_defects4j12), set(selfapr_defects4j12), set(cure_defects4j12)
-])
-intersections3 = {k: len(v) for k, v in intersections3.items()}
-intersections4 = calculate_intersections([
-    set(rapgen_defects4j2), set(rewardrepair_defects4j2), set(selfapr_defects4j2), set(cure_defects4j2)
-])
-intersections4 = {k: len(v) for k, v in intersections4.items()}
-print(intersections3)
+# intersections = calculate_intersections([
+#     set(mcts_defects4j12), set(rapgen_defects4j12), set(rewardrepair_defects4j12), set(selfapr_defects4j12),
+#     set(cure_defects4j12)
+# ])
+# intersections = {k: len(v) for k, v in intersections.items()}
+# intersections2 = calculate_intersections([
+#     set(mcts_defects4j2), set(rapgen_defects4j2), set(rewardrepair_defects4j2), set(selfapr_defects4j2),
+#     set(cure_defects4j2)
+# ])
+# intersections2 = {k: len(v) for k, v in intersections2.items()}
+# intersections3 = calculate_intersections([
+#     set(rapgen_defects4j12), set(rewardrepair_defects4j12), set(selfapr_defects4j12), set(cure_defects4j12)
+# ])
+# intersections3 = {k: len(v) for k, v in intersections3.items()}
+# intersections4 = calculate_intersections([
+#     set(rapgen_defects4j2), set(rewardrepair_defects4j2), set(selfapr_defects4j2), set(cure_defects4j2)
+# ])
+# intersections4 = {k: len(v) for k, v in intersections4.items()}
+# print(intersections3)
 # venn4(intersections3,names=['RAP-Gen','RewardRepair','SelfAPR','CURE'],output="./pdf/d4j12_venn4")
-venn5(intersections, names=['APRMCTS', 'RAP-Gen', 'RewardRepair', 'SelfAPR', 'CURE'], output="./pdf/d4j12_venn.pdf")
-# venn5(intersections2,names=['APRMCTS','RAP-Gen','RewardRepair','SelfAPR','CURE'],output="./pdf/d4j2_venn.pdf")
+# venn5(intersections, names=['APRMCTS', 'RAP-Gen', 'RewardRepair', 'SelfAPR', 'CURE'], output="./pdf/d4j12_venn.pdf")
+# venn5(intersections,names=['APRMCTS','RAP-Gen','RewardRepair','SelfAPR','CURE'],output="./pdf/d4j12_venn.pdf")
 ##%%
 
+# intersections5=calculate_intersections([
+#     set(repairagent_all),set(mcts_all),set(chatrepair_all)
+# ])
+# intersections5 = {k: len(v) for k, v in intersections5.items()}
+# venn3(intersections5,names=['RepairAgent','APRMCTS','ChatRepair'],output="./pdf/d4jall_venn.pdf")
 
-##%%
+# intersections6 = calculate_intersections([
+#     set(mcts_defects4j12), set(repairagent_d4j12), set(chatrepair_d4j12)
+# ])
+#
+# intersections7 = calculate_intersections([
+#     set(mcts_defects4j2), set(repairagent_d4j2), set(chatrepair_d4j2)
+# ])
+# intersections6 = {k: len(v) for k, v in intersections6.items()}
+# intersections7 = {k: len(v) for k, v in intersections7.items()}
+# venn3(intersections6, names=['APRMCTS', 'RepairAgent', 'ChatRepair'], output="./pdf/best_d4j12_venn.pdf")
+
+read_iter_bugfix_d4j12_and_d4j2()
