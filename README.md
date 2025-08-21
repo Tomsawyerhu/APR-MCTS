@@ -1,3 +1,5 @@
+# APRMCTS: Improving LLM-based Automated Program Repair with Iterative Tree Search
+
 ## Requirements
 + Gradle: 8.11.1
 ```shell
@@ -26,6 +28,13 @@ cd defects4j
 cpanm --installdeps .
 ./init.sh
 export PATH=$PATH:"path2defects4j"/framework/bin
+```
+
++ SWE-bench
+```shell
+git clone git@github.com:princeton-nlp/SWE-bench.git
+cd SWE-bench
+pip install -e .
 ```
 
 + ConDefects
