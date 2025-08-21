@@ -727,27 +727,3 @@ def evaluate_patch(instance_id,
         log_writer.write('\n\n\n\n')
     return final_score, False, test_output_content
 
-
-if __name__ == '__main__':
-    output_file = './swe_lite_patch.jsonl'
-    base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-    api_key = "sk-e346078d76f546c2ab04f0f008126a91"
-    with open('swe_lite_loc_with_context.jsonl', 'r') as f:
-        line1 = f.readlines()[0]
-    sample = json.loads(line1)
-
-    problem_statement = sample['problem_statement']
-    instance_id = sample['instance_id']
-    buggy_locs = sample['buggy_code']
-    found_files = list(sample['buggy_files'].keys())
-    file_contents = list(sample['buggy_files'].values())
-
-    prompt = AGENTLESS_PROMPT.format(problem_statement=problem_statement, retrieval=json.dumps(buggy_locs, indent=4))
-    generate_with_retries(instance_id,
-                          prompt,
-                          output_file,
-                          file_contents=file_contents,
-                          found_files=found_files,
-                          model_name='qwen3-coder-plus',
-                          base_url=base_url,
-                          api_key=api_key)
