@@ -146,7 +146,7 @@ python swe_mcts.py
 | OpenHands | Claude-3.5 Sonnet | 125      | 41.67%    | 2024-10-25 |
 | Vanilla LLMs    | Qwen3-Coder-480B | 113      | 37.67%    | 2025-08-30 |
 
-Log file and result at: [Baidu Netdisk](https://pan.baidu.com/s/1WhT7kHUt9rbK5uSpWolpfg?pwd=s85q)
+Log file and result at: [Google Drive](https://drive.google.com/drive/folders/15QmAuVefhdOdJPeCwFbtd_mfknxEWfcK?usp=sharing)
 
 Appendix at: [Appendix](https://github.com/Tomsawyerhu/APRMcts/blob/master/aprmcts_appendix.pdf)
 
