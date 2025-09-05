@@ -147,4 +147,5 @@ python swe_mcts.py
 | Vanilla LLMs    | Qwen3-Coder-480B | 113      | 37.67%    | 2025-08-30 |
 
 Log file and result at: [Baidu Netdisk](https://pan.baidu.com/s/1WhT7kHUt9rbK5uSpWolpfg?pwd=s85q)
+Appendix at: [Appendix](https://github.com/Tomsawyerhu/APRMcts/blob/master/aprmcts_appendix.pdf)
 
