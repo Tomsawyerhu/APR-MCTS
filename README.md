@@ -149,6 +149,8 @@ python swe_mcts.py
 
 Log file and result at: [Google Drive](https://drive.google.com/drive/folders/15QmAuVefhdOdJPeCwFbtd_mfknxEWfcK?usp=sharing)
 
+Appendix at: [Appendix](https://github.com/Tomsawyerhu/APRMcts/blob/master/aprmcts_appendix.pdf)
+
 ## Citation
 ```
 @misc{hu2025aprmctsimprovingllmbasedautomated,
@@ -162,7 +164,4 @@ Log file and result at: [Google Drive](https://drive.google.com/drive/folders/15
 }
 ```
 
-
-
-Appendix at: [Appendix](https://github.com/Tomsawyerhu/APRMcts/blob/master/aprmcts_appendix.pdf)
 
