@@ -1,4 +1,5 @@
-# APRMCTS: Improving LLM-based Automated Program Repair with Iterative Tree Search
+# APR-MCTS
+[ASE 2025] This is the official implementation of [APRMCTS: Improving LLM-based Automated Program Repair with Iterative Tree Search](https://arxiv.org/abs/2507.01827).
 
 ## Requirements
 + Gradle: 8.11.1
@@ -147,6 +148,21 @@ python swe_mcts.py
 | Vanilla LLMs    | Qwen3-Coder-480B | 113      | 37.67%    | 2025-08-30 |
 
 Log file and result at: [Google Drive](https://drive.google.com/drive/folders/15QmAuVefhdOdJPeCwFbtd_mfknxEWfcK?usp=sharing)
+
+## Citation
+```
+@misc{hu2025aprmctsimprovingllmbasedautomated,
+      title={APRMCTS: Improving LLM-based Automated Program Repair with Iterative Tree Search}, 
+      author={Haichuan Hu and Congqing He and Hao Zhang and Xiaochen Xie and Quanjun Zhang},
+      year={2025},
+      eprint={2507.01827},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2507.01827}, 
+}
+```
+
+
 
 Appendix at: [Appendix](https://github.com/Tomsawyerhu/APRMcts/blob/master/aprmcts_appendix.pdf)
 
